@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.mobdeve.s17.deguzman_fernandez_posadas.charcookery"
+    namespace = "com.mobdeve.s17.charcookery"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.mobdeve.s17.deguzman_fernandez_posadas.charcookery"
+        applicationId = "com.mobdeve.s17.charcookery"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

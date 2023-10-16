@@ -1,8 +1,8 @@
-package com.mobdeve.s17.deguzman_fernandez_posadas.charcookery;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.mobdeve.s17.charcookery;
 
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 

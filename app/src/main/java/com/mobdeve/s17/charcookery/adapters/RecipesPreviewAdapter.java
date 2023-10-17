@@ -1,12 +1,16 @@
 package com.mobdeve.s17.charcookery.adapters;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.R;
@@ -20,12 +24,14 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
         public ImageView ivThumbnail;
         public TextView tvTitle;
         public TextView tvCategory;
+        public Button btnFavorite;
         public RecipePreviewHolder(View v) {
             super(v);
 
             ivThumbnail = v.findViewById(R.id.recipePreviewImg);
             tvTitle = v.findViewById(R.id.recipePreviewTitle);
             tvCategory = v.findViewById(R.id.recipePreviewCategory);
+            btnFavorite = v.findViewById(R.id.recipePreviewLikeBtn);
         }
     }
 
@@ -37,8 +43,7 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
     @Override
     public RecipePreviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_recipe, parent, false);
-        RecipePreviewHolder viewHolder = new RecipePreviewHolder(v);
-        return viewHolder;
+        return new RecipePreviewHolder(v);
     }
 
     @Override
@@ -48,6 +53,29 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
         holder.ivThumbnail.setImageResource(currentItem.getImageResource());
         holder.tvTitle.setText(currentItem.getTitle());
         holder.tvCategory.setText(currentItem.getCategory());
+
+        Context context = holder.itemView.getContext();
+        Drawable dwHeartFilled = ContextCompat.getDrawable(context, R.drawable.heart_filled);
+        Drawable dwHeartOutline = ContextCompat.getDrawable(context, R.drawable.heart_outline);
+
+        if (currentItem.checkFavorite()) {
+            holder.btnFavorite.setForeground(dwHeartFilled);
+        } else {
+            holder.btnFavorite.setForeground(dwHeartOutline);
+        }
+
+        holder.btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentItem.toggleFavorite();
+
+                if (currentItem.checkFavorite()) {
+                    holder.btnFavorite.setForeground(dwHeartFilled);
+                } else {
+                    holder.btnFavorite.setForeground(dwHeartOutline);
+                }
+            }
+        });
     }
 
     @Override

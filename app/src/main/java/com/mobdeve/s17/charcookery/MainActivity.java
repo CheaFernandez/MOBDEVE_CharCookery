@@ -8,6 +8,7 @@ import com.mobdeve.s17.charcookery.components.RecipeCollectionPreview;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<RecipeItem> generateMockRecipeItems(int count) {
         // NOTE: For MCO2 only
         ArrayList<RecipeItem> recipeItems = new ArrayList<>();
+        Random rand = new Random();
 
         for (int i = 0; i < count; i++) {
-            recipeItems.add(new RecipeItem(R.drawable.demo_food, "Recipe Name Here", "Category"));
+            Boolean isFavorite = rand.nextFloat() < 0.4f; // 40% chance of being a favorite recipe
+            recipeItems.add(new RecipeItem(R.drawable.demo_food, "Recipe Name Here", "Category", isFavorite));
         }
 
         return recipeItems;

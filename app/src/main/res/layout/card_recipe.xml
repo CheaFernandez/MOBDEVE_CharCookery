@@ -25,7 +25,8 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="4dp"
             android:text="Recipe name"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/recipePreviewCategory"

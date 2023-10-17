@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ArrayList<RecipeItem> recipeItems = new ArrayList<>();
-        recipeItems.add(new RecipeItem(R.drawable.demo_food, "Recipe Title Here", "Category"));
-        recipeItems.add(new RecipeItem(R.drawable.demo_food, "Recipe Title Here", "Category"));
-        recipeItems.add(new RecipeItem(R.drawable.demo_food, "Recipe Title Here", "Category"));
+        recipeItems.add(new RecipeItem(R.drawable.demo_food, "Recipe Name Here", "Category"));
+        recipeItems.add(new RecipeItem(R.drawable.demo_food, "Recipe Name Here", "Category"));
+        recipeItems.add(new RecipeItem(R.drawable.demo_food, "Recipe Name Here", "Category"));
 
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new RecipesPreviewAdapter(recipeItems);

@@ -20,11 +20,13 @@ import java.util.ArrayList;
 
 public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAdapter.RecipePreviewHolder> {
     private ArrayList<RecipeItem> recipeItems;
+    private static final int MAX_ITEMS = 4;
     public static class RecipePreviewHolder extends RecyclerView.ViewHolder {
         public ImageView ivThumbnail;
         public TextView tvTitle;
         public TextView tvCategory;
         public Button btnFavorite;
+
         public RecipePreviewHolder(View v) {
             super(v);
 
@@ -80,6 +82,6 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
 
     @Override
     public int getItemCount() {
-        return recipeItems.size();
+        return Math.min(recipeItems.size(), MAX_ITEMS);
     }
 }

@@ -3,7 +3,10 @@ package com.mobdeve.s17.charcookery;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.mobdeve.s17.charcookery.adapters.CategoryListAdapter;
+import com.mobdeve.s17.charcookery.adapters.RecipesPreviewAdapter;
 import com.mobdeve.s17.charcookery.components.RecipeCollectionPreview;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
@@ -12,11 +15,15 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    private RecyclerView rvCategories;
+    private RecyclerView.Adapter rvAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        initCategories();
     }
 
     private void initView() {
@@ -37,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
         collectionCustomRecipes3.setRecipes(generateMockRecipeItems(4));
     }
 
+    private void initCategories() {
+        rvCategories = findViewById(R.id.rvCategories);
+
+        ArrayList<String> categories = generateMockCategories(5);
+        rvAdapter = new CategoryListAdapter(categories);
+        rvCategories.setAdapter(rvAdapter);
+    }
+
     private ArrayList<RecipeItem> generateMockRecipeItems(int count) {
         // NOTE: For MCO2 only
         ArrayList<RecipeItem> recipeItems = new ArrayList<>();
@@ -48,5 +63,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return recipeItems;
+    }
+
+    private ArrayList<String> generateMockCategories(int count) {
+        // NOTE: For MCO2 only
+        ArrayList<String> categoryNames = new ArrayList<>();
+
+        for (int i = 1; i <= count; i++) {
+            categoryNames.add("Category " + i);
+        }
+
+        return categoryNames;
     }
 }

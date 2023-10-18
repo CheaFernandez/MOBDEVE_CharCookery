@@ -1,6 +1,8 @@
 package com.mobdeve.s17.charcookery.models;
 
-public class RecipeItem {
+import java.io.Serializable;
+
+public class RecipeItem implements Serializable {
     private int imageResource;
     private String title;
     private String category;

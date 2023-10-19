@@ -89,8 +89,7 @@
                     <LinearLayout
                         android:id="@+id/addCategoryLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/border_black"
                         android:gravity="center"
                         android:orientation="horizontal"
@@ -101,7 +100,7 @@
 
                         <TextView
                             android:id="@+id/addCategoryTitle"
-                            android:layout_width="318dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Add Category"
@@ -109,12 +108,10 @@
 
                         <ImageView
                             android:id="@+id/addCategoryClickIcon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
                             android:importantForAccessibility="no"
-                            android:src=""
-                            app:srcCompat="@android:drawable/ic_menu_add" />
+                            android:src="@drawable/plus_outline" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

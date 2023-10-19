@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import com.mobdeve.s17.charcookery.CollectionActivity;
+import com.mobdeve.s17.charcookery.FavoritesActivity;
 import com.mobdeve.s17.charcookery.MainActivity;
 import com.mobdeve.s17.charcookery.R;
 
@@ -73,9 +74,8 @@ public class MenuBar extends LinearLayout {
         tabFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Add intent to move to Favorites page
-                // Intent intent = new Intent(context, ADD_ACTIVITY_HERE.class);
-                // context.startActivity(intent);
+                 Intent intent = new Intent(context, FavoritesActivity.class);
+                 context.startActivity(intent);
             }
         });
         tabUserProfile.setOnClickListener(new View.OnClickListener() {

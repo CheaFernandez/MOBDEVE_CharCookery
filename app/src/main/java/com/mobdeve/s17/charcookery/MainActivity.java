@@ -15,6 +15,7 @@ import com.mobdeve.s17.charcookery.models.RecipeItem;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -83,17 +84,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-    }
-
-    private ArrayList<String> generateMockCategories(int count) {
-        // NOTE: For MCO2 only
-        ArrayList<String> categoryNames = new ArrayList<>();
-
-        for (int i = 1; i <= count; i++) {
-            categoryNames.add("Category " + i);
-        }
-
-        return categoryNames;
     }
 
     public void gotoAddCategoryView(View view) {

@@ -1,42 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".AddCategory">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_category_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/charcookery_logo"
-        android:importantForAccessibility="no" />
+        android:layout_height="42dp"
+        android:src="@drawable/charcookery_logo"
+        android:paddingTop="10dp" />
 
     <LinearLayout
         android:id="@+id/add_category_layout"
         android:layout_width="match_parent"
         android:layout_height="669dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/new_category_heading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start|top|center_vertical"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif"
             android:text="@string/new_category_txt"
             android:textSize="18sp"
@@ -47,10 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="4dp"
             android:text="@string/title_txt" />
 
         <EditText
@@ -58,57 +44,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center|start"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@android:drawable/editbox_background"
             android:backgroundTint="#D6D6D6"
             android:ems="10"
+            android:importantForAutofill="no"
             android:inputType="text"
             android:minHeight="48dp"
             android:padding="5dp"
             android:text=""
             android:textColorHint="#9E9E9E"
-            tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize"
-            android:importantForAutofill="no" />
+            tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
             android:orientation="horizontal">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/cancel_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|center_horizontal"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:backgroundTint="#959595"
-                android:text="@string/cancel_btn_txt"
-                android:textColor="#000000"
-                android:textSize="12sp"
+                android:background="@drawable/grey_rounded"
+                android:minHeight="0dp"
                 android:onClick="cancel_add"
-                style="?android:attr/buttonBarButtonStyle"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/cancel_btn_txt"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="12sp"
                 tools:ignore="VisualLintButtonSize" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/addcategory_btn"
-                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|end"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:backgroundTint="#EEE629"
+                android:background="@drawable/primary_rounded"
+                android:minHeight="0dp"
                 android:onClick="add_category"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:text="@string/addcategory_btn_txt"
-                android:textColor="#000000"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="12sp"
                 tools:ignore="VisualLintButtonSize" />
         </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

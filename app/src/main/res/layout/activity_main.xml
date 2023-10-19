@@ -79,8 +79,7 @@
                 android:focusable="true"
                 android:background="?android:attr/selectableItemBackground"
                 android:onClick="gotoAddCategoryView">
-                <!--       TODO: Make gotoAddCategoryView function in "MainActivity" using intents      -->
-
+                
                 <androidx.cardview.widget.CardView
                     android:id="@+id/addCategoryCard"
                     android:layout_width="match_parent"
@@ -112,6 +111,7 @@
                             android:layout_height="16dp"
                             android:importantForAccessibility="no"
                             android:src="@drawable/plus_outline" />
+
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>

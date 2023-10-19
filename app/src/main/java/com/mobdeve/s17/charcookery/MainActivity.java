@@ -115,4 +115,8 @@ public class MainActivity extends AppCompatActivity {
         return categoryNames;
     }
 
+    public void gotoAddCategoryView(View view) {
+        Intent intent = new Intent(this, AddCategory.class);
+        startActivity(intent);
+    }
 }

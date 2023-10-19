@@ -27,7 +27,6 @@ public class AddCategory extends AppCompatActivity {
         edit_category_title.setText("");
         Intent homeIntent = new Intent(AddCategory.this, MainActivity.class);
         startActivity(homeIntent);
-
     }
 
     public void add_category(View view) {

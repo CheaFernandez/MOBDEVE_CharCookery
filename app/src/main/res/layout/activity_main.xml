@@ -7,7 +7,11 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- Insert logo/header here -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:src="@drawable/charcookery_logo"
+        android:paddingTop="10dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -117,6 +121,9 @@
         </LinearLayout>
     </ScrollView>
 
-    <include layout="@layout/layout_menu" />
+    <com.mobdeve.s17.charcookery.components.MenuBar
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:activePage="home" />
 
 </LinearLayout>

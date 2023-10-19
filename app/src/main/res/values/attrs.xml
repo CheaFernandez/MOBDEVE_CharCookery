@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MenuBar">
+        <attr name="activePage" format="enum">
+            <enum name="home" value="0" />
+            <enum name="recipes" value="1" />
+            <enum name="favorites" value="2" />
+            <enum name="user_profile" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>

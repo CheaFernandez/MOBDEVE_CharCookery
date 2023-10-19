@@ -1,63 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <!-- Insert logo/header here -->
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingTop="20dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="80dp">
+        android:layout_weight="1">
 
-        <com.mobdeve.s17.charcookery.components.RecipeCollectionPreview
-            android:id="@+id/collectionMyRecipes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp" />
-
-        <com.mobdeve.s17.charcookery.components.RecipeCollectionPreview
-            android:id="@+id/collectionCustom1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp" />
-
-        <com.mobdeve.s17.charcookery.components.RecipeCollectionPreview
-            android:id="@+id/collectionCustom2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp" />
-
-        <com.mobdeve.s17.charcookery.components.RecipeCollectionPreview
-            android:id="@+id/collectionCustom3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp" />
-
-        <TextView
-            android:id="@+id/categorySectionTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Categories"
-            android:textFontWeight="700"
-            android:textSize="18sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCategories"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="5"
-            tools:listitem="@layout/card_category" >
+            android:paddingStart="16dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="80dp">
 
-        </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+            <com.mobdeve.s17.charcookery.components.RecipeCollectionPreview
+                android:id="@+id/collectionMyRecipes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp" />
 
-</ScrollView>
+            <com.mobdeve.s17.charcookery.components.RecipeCollectionPreview
+                android:id="@+id/collectionCustom1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp" />
+
+            <com.mobdeve.s17.charcookery.components.RecipeCollectionPreview
+                android:id="@+id/collectionCustom2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp" />
+
+            <com.mobdeve.s17.charcookery.components.RecipeCollectionPreview
+                android:id="@+id/collectionCustom3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp" />
+
+            <TextView
+                android:id="@+id/categorySectionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Categories"
+                android:textFontWeight="700"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="5"
+                tools:listitem="@layout/card_category" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </ScrollView>
+
+    <include layout="@layout/layout_menu" />
+
+</LinearLayout>

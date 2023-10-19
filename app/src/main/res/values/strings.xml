@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CharCookery</string>
+    <string name="category_desc">Categories</string>
+    <string name="addcategory_btn_txt">Add Category</string>
+    <string name="cancel_btn_txt">Cancel</string>
+    <string name="title_txt">Title</string>
+    <string name="new_category_txt">New Category</string>
 </resources>

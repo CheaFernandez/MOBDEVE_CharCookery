@@ -23,6 +23,7 @@
                 android:layout_width="170dp"
                 android:layout_height="110dp"
                 android:scaleType="centerCrop"
+                android:onClick="gotoRecipeView"
                 app:srcCompat="@drawable/demo_food" />
 
             <TextView
@@ -31,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="4dp"
+                android:onClick="gotoRecipeView"
                 android:text="Recipe name"
                 android:textSize="12sp"
                 android:textStyle="bold" />

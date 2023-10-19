@@ -90,4 +90,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddCategory.class);
         startActivity(intent);
     }
+
+    public void gotoRecipeView(View view) {
+        Intent intent = new Intent(this, RecipeActivity.class);
+        startActivity(intent);
+    }
 }

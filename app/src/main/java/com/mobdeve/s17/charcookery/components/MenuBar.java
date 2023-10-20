@@ -16,6 +16,7 @@ import com.mobdeve.s17.charcookery.CollectionActivity;
 import com.mobdeve.s17.charcookery.FavoritesActivity;
 import com.mobdeve.s17.charcookery.MainActivity;
 import com.mobdeve.s17.charcookery.R;
+import com.mobdeve.s17.charcookery.RecipesActivity;
 
 public class MenuBar extends LinearLayout {
 
@@ -61,14 +62,11 @@ public class MenuBar extends LinearLayout {
                 context.startActivity(intent);
             }
         });
-
-
         tabRecipes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Add intent to move to Recipes page
-                // Intent intent = new Intent(context, ADD_ACTIVITY_HERE.class);
-                // context.startActivity(intent);
+                 Intent intent = new Intent(context, RecipesActivity.class);
+                 context.startActivity(intent);
             }
         });
         tabFavorites.setOnClickListener(new View.OnClickListener() {

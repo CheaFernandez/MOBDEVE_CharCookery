@@ -3,4 +3,13 @@
     <style name="TabLayoutText">
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="TextInput">
+        <item name="android:layout_height">32dp</item>
+        <item name="android:background">@drawable/lgrey_rounded</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>

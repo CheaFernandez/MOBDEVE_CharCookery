@@ -26,33 +26,25 @@
             android:layout_height="match_parent"
             android:drawableLeft="@drawable/icon_search"
             android:drawablePadding="8dp"
-            android:background="@drawable/lgrey_rounded"
             android:layout_weight="1"
             android:paddingStart="10dp"
-            android:paddingEnd="8dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:textSize="12sp" />
+            style="@style/TextInput" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/icon_adjustments"
-            android:background="@drawable/lgrey_rounded"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="1.5dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            style="@style/TextInput" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/icon_write"
-            android:background="@drawable/lgrey_rounded"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="1.5dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp" />
+            style="@style/TextInput" />
 
     </LinearLayout>
 

@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="271dp"
+        android:layout_height="246dp"
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="32dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="64sp"
+        tools:layout_editor_absoluteX="66dp"
+        tools:layout_editor_absoluteY="334dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="174dp"
+        tools:layout_editor_absoluteY="443dp" />
+
+    <LinearLayout
+        android:layout_width="376dp"
+        android:layout_height="39dp"
+        android:layout_gravity="center|top"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="542dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/grey_rounded"
+            android:minHeight="0dp"
+            android:onClick="cancel_add"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Log In"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="12sp"
+            tools:ignore="VisualLintButtonSize" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:background="@drawable/grey_rounded"
+            android:minHeight="0dp"
+            android:onClick="add_category"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Register"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="12sp"
+            tools:ignore="VisualLintButtonSize" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

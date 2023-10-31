@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
     private final int GALLERY_REQ_CODE = 1000;
     ImageButton uploadImageBtn;
+    Spinner categorySpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,13 @@ public class AddRecipeActivity extends AppCompatActivity {
 
             }
         });
+
+        categorySpinner = findViewById(R.id.spinner_category_field);
+
+        String[] items = {"Item A", "Item B", "Item C"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter);
 
         // TODO: Add intents for the text fields and button for add recipe
     }

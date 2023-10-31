@@ -7,4 +7,5 @@
     <string name="new_category_txt">New Category</string>
     <string name="add_recipe_txt">Add Recipe</string>
     <string name="title_activity_basis">basis</string>
+    <string name="your_prompt_here"> </string>
 </resources>

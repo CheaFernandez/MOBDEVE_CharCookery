@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "17470444434",
+    "project_id": "charcookery",
+    "storage_bucket": "charcookery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17470444434:android:13b36ebedcc8c021c0e74b",
+        "android_client_info": {
+          "package_name": "com.mobdeve.s17.charcookery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8ApWt291Qx99OwNRCE30P3VuNlM0Y9Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

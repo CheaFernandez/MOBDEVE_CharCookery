@@ -121,21 +121,18 @@
         app:tabTextColor="#777777">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/recipeIngredientsTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:text="Ingredients" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/recipeInstructionsTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:text="Instructions" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/recipeNotesTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="0dp"

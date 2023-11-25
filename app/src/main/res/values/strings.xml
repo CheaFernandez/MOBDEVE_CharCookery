@@ -8,4 +8,5 @@
     <string name="add_recipe_txt">Add Recipe</string>
     <string name="title_activity_basis">basis</string>
     <string name="your_prompt_here"> </string>
+    <string name="ingredients_txt">Ingredients</string>
 </resources>

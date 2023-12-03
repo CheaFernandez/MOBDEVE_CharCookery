@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -95,6 +96,18 @@ public class AddRecipeActivity extends AppCompatActivity {
         edit_instructions_field = findViewById(R.id.edit_instructions_field);
         edit_notes_field = findViewById(R.id.edit_notes_field);
 
+        edit_ingredients_field.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        edit_ingredients_field.setSingleLine(false);
+        edit_ingredients_field.setMaxLines(Integer.MAX_VALUE);
+
+        edit_instructions_field.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        edit_instructions_field.setSingleLine(false);
+        edit_instructions_field.setMaxLines(Integer.MAX_VALUE);
+
+        edit_notes_field.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        edit_notes_field.setSingleLine(false);
+        edit_notes_field.setMaxLines(Integer.MAX_VALUE);
+
         // TODO: Fix EDIT TEXT FIELDS for DB update
 
 
@@ -104,6 +117,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: Add Recipe to Database
+                gotoPreviousPage(v);
             }
         });
         recipe_cancel_btn = findViewById(R.id.recipe_cancel_btn);

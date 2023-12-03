@@ -2,20 +2,29 @@ package com.mobdeve.s17.charcookery;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.adapters.CategoryListAdapter;
+import com.mobdeve.s17.charcookery.api.APIClient;
+import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.components.RecipeCollectionPreview;
 import com.mobdeve.s17.charcookery.models.Mocker;
+import com.mobdeve.s17.charcookery.models.Recipe;
 import com.mobdeve.s17.charcookery.models.RecipeCollection;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,15 +35,41 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<RecipeCollection> recipeCollections;
     private ArrayList<String> categories;
 
+    private APIInterface apiInterface;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+        getCommunityRecipes();
+
         setupMockData();
 
         initCollectionPreviews();
         initCategories();
+    }
+
+    private void getCommunityRecipes() {
+        Call<List<Recipe>> call = apiInterface.getListCommunityRecipes();
+        call.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                Log.d("TAG",response.code()+"");
+
+                if (response.isSuccessful()) {
+                    List<Recipe> recipes = response.body();
+                    if (recipes != null) {
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
 
     private void initCollectionPreviews() {

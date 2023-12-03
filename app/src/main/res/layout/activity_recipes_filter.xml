@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/header_logo">
 
         <TextView
-            android:id="@+id/newRecipeTitle"
+            android:id="@+id/edit_recipe_name_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start|top"
@@ -118,7 +118,7 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/edit_estTime_field"
+                android:id="@+id/edit_estimated_time_field"
                 style="@style/TextInput"
                 android:layout_width="match_parent"
                 android:layout_marginTop="5dp"

@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/edit_notes_field"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddRecipeActivity">
@@ -37,8 +36,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/newRecipeTitle"
+            <EditText
+                android:id="@+id/edit_recipe_name_field"
+                style="@style/TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|top"
@@ -48,42 +48,38 @@
                 android:layout_marginBottom="5dp"
                 android:text="New Recipe"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck" />
 
-            <ImageButton
-                android:id="@+id/upload_image_imgbtn"
-                android:layout_width="match_parent"
-                android:layout_height="186dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="21dp"
-                android:layout_marginEnd="21dp"
-                android:backgroundTint="#F1F1F1"
-                app:srcCompat="@drawable/empty_field"
-                tools:ignore="ContentDescription,ImageContrastCheck,SpeakableTextPresentCheck" />
-
-            <TextView
-                android:id="@+id/title_txt"
+            <ImageView
+                android:id="@+id/recipe_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:scaleType="fitXY"
                 android:layout_gravity="center"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
-                android:text="Title"
-                android:textSize="12sp"
-                android:textStyle="normal" />
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="21dp"
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/empty_field" />
 
-            <EditText
-                android:id="@+id/edit_title_field"
-                style="@style/TextInput"
-                android:layout_width="match_parent"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="15dp"
-                android:ems="10"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize,TouchTargetSizeCheck" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/upload_image_btn"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/primary_rounded"
+                android:minHeight="0dp"
+                android:onClick="add_category"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Upload Image"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="12sp"
+                tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,7 +129,7 @@
                         android:textSize="12sp" />
 
                     <EditText
-                        android:id="@+id/edit_estTime_field"
+                        android:id="@+id/edit_estimated_time_field"
                         style="@style/TextInput"
                         android:layout_width="match_parent"
                         android:layout_marginTop="5dp"
@@ -173,6 +169,25 @@
                     tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize,TouchTargetSizeCheck" />
 
                 <TextView
+                    android:id="@+id/instructions_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Instructions"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/edit_instructions_field"
+                    style="@style/TextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize,TouchTargetSizeCheck" />
+
+                <TextView
                     android:id="@+id/notes_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,6 +195,7 @@
                     android:textSize="12sp" />
 
                 <EditText
+                    android:id="@+id/edit_notes_field"
                     style="@style/TextInput"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"

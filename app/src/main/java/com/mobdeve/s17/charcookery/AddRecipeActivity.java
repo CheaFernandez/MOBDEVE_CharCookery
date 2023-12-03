@@ -47,7 +47,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         uploadImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create an array to store the choices
                 final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(AddRecipeActivity.this);
@@ -57,8 +56,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int item) {
                         if (ContextCompat.checkSelfPermission(AddRecipeActivity.this, android.Manifest.permission.CAMERA)
                                 != PackageManager.PERMISSION_GRANTED) {
-                            // Permission is not granted
-                            // Ask for permission
                             requestPermissions(new String[]{android.Manifest.permission.CAMERA}, CAMERA_REQ_CODE);
                         } else {
                             if (options[item].equals("Take Photo")) {
@@ -137,13 +134,13 @@ public class AddRecipeActivity extends AppCompatActivity {
         // TODO: Fix Image scaling
         if (requestCode == GALLERY_REQ_CODE && resultCode == RESULT_OK && data != null) {
             recipe_image_view.setImageURI(data.getData());
-            recipe_image_view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            recipe_image_view.setScaleType(ImageView.ScaleType.FIT_CENTER);
             recipe_image_view.requestLayout(); // Request a layout update
         } else if (requestCode == IMAGE_CAPTURE_REQ && resultCode == RESULT_OK && data != null) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             recipe_image_view.setImageBitmap(imageBitmap);
-            recipe_image_view.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            recipe_image_view.setScaleType(ImageView.ScaleType.FIT_CENTER);
             recipe_image_view.requestLayout(); // Request a layout update
         }
     }

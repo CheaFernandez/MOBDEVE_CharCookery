@@ -51,35 +51,39 @@
                 android:textStyle="bold"
                 tools:ignore="TouchTargetSizeCheck" />
 
-            <ImageView
-                android:id="@+id/recipe_image_view"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:layout_gravity="center"
-                android:layout_marginStart="21dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="21dp"
-                android:layout_marginBottom="10dp"
-                app:srcCompat="@drawable/empty_field" />
+                android:layout_height="170dp">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/upload_image_btn"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="6dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/primary_rounded"
-                android:minHeight="0dp"
-                android:onClick="add_category"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:text="Upload Image"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="12sp"
-                tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
+                <ImageView
+                    android:id="@+id/recipe_image_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="21dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="21dp"
+                    android:layout_marginBottom="10dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/empty_field" />
+            </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/upload_image_btn"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/primary_rounded"
+                    android:minHeight="0dp"
+                    android:onClick="add_category"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Upload Image"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="12sp"
+                    tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
 
             <LinearLayout
                 android:layout_width="match_parent"

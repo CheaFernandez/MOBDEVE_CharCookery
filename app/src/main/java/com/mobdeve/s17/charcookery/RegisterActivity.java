@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.os.Bundle;
-import android.text.InputType;
 import android.widget.EditText;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -21,8 +20,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         register_btn = findViewById(R.id.register_btn);
         cancel_btn = findViewById(R.id.cancel_btn);
-        usernameEt = findViewById(R.id.usernameEt);
-        passwordEt = findViewById(R.id.passwordEt);
+        usernameEt = findViewById(R.id.loginEmailEt);
+        passwordEt = findViewById(R.id.loginPasswordEt);
         emailEt = findViewById(R.id.emailEt);
 
         register_btn.setOnClickListener(v -> {

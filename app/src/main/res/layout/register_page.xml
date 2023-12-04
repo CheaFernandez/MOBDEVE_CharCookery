@@ -40,7 +40,7 @@
             android:text="Username" />
 
         <EditText
-            android:id="@+id/usernameEt"
+            android:id="@+id/loginEmailEt"
             style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
@@ -76,7 +76,7 @@
             android:text="Password" />
 
         <EditText
-            android:id="@+id/passwordEt"
+            android:id="@+id/loginPasswordEt"
             style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"

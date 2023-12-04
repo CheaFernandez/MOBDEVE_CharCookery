@@ -1,11 +1,13 @@
 package com.mobdeve.s17.charcookery.api;
 
 import com.mobdeve.s17.charcookery.api.models.AccessTokenResponse;
+import com.mobdeve.s17.charcookery.api.models.CreateAccountBody;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,11 +24,14 @@ public interface APIInterface {
 
     /* USER / AUTH ROUTES */
     @FormUrlEncoded
-    @POST("/api/token")  // Replace with your OAuth token endpoint
+    @POST("/api/token")
     Call<AccessTokenResponse> getAccessToken(
             @Field("grant_type") String grantType,
             @Field("username") String username,
             @Field("password") String password
     );
+
+    @POST("/api/user")
+    Call<AccessTokenResponse> createAccount(@Body CreateAccountBody requestBody);
 
 }

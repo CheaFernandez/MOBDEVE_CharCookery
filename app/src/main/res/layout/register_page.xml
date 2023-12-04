@@ -32,24 +32,6 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/category_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginBottom="4dp"
-            android:text="Username" />
-
-        <EditText
-            android:id="@+id/loginEmailEt"
-            style="@style/TextInput"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="20dp"
-            android:ems="10"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
-
-        <TextView
             android:id="@+id/category_title3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +40,7 @@
             android:text="Email" />
 
         <EditText
-            android:id="@+id/emailEt"
+            android:id="@+id/registerEmailEt"
             style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
@@ -76,13 +58,13 @@
             android:text="Password" />
 
         <EditText
-            android:id="@+id/loginPasswordEt"
+            android:id="@+id/registerPasswordEt"
             style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
             android:ems="10"
             android:importantForAutofill="no"
-            android:inputType="text"
+            android:inputType="textPassword"
             tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
         <LinearLayout

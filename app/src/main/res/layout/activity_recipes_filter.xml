@@ -146,7 +146,7 @@
                 android:textSize="12sp" />
 
             <EditText
-                android:id="@+id/edit_ingredients_field"
+                android:id="@+id/edit_ingredients_contains_field"
                 style="@style/TextInput"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
@@ -165,7 +165,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/recipe_cancel_btn"
+                    android:id="@+id/cancel_btn"
                     android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="6dp"
@@ -181,7 +181,7 @@
                     tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/recipe_addrecipe_btn"
+                    android:id="@+id/filter_recipes_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"

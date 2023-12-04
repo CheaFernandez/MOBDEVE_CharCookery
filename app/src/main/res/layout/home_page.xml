@@ -3,40 +3,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#FFFEEA">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="271dp"
         android:layout_height="246dp"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="32dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/main_logo" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="64sp"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="334dp" />
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-black"
+        android:text="CharCookery"
+        android:textAllCaps="false"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="174dp"
-        tools:layout_editor_absoluteY="443dp" />
+        android:layout_marginStart="165dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="166dp"
+        android:layout_marginBottom="50dp"
+        android:text="Your Portable Recipe book"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <LinearLayout
-        android:layout_width="376dp"
-        android:layout_height="39dp"
+        android:id="@+id/linearLayout3"
+        android:layout_width="309dp"
+        android:layout_height="34dp"
         android:layout_gravity="center|top"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="209dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="542dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login"
@@ -44,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"
-            android:background="@drawable/grey_rounded"
+            android:background="@drawable/primary_rounded"
             android:minHeight="0dp"
             android:onClick="cancel_add"
             android:paddingTop="8dp"
@@ -52,7 +84,7 @@
             android:text="Log In"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="12sp"
-            tools:ignore="VisualLintButtonSize" />
+            tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register"
@@ -68,6 +100,6 @@
             android:text="Register"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="12sp"
-            tools:ignore="VisualLintButtonSize" />
+            tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

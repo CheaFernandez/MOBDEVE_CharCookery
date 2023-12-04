@@ -20,8 +20,8 @@ public class AddCategory extends AppCompatActivity {
         setContentView(R.layout.activity_add_category);
 
         edit_category_title = findViewById(R.id.edit_title_field);
-        cancel_btn = findViewById(R.id.recipe_cancel_btn);
-        addcategory_btn = findViewById(R.id.addcategory_btn);
+        cancel_btn = findViewById(R.id.cancel_btn);
+        addcategory_btn = findViewById(R.id.register_btn);
     }
     public void cancel_add(View view) {
         edit_category_title.setText("");

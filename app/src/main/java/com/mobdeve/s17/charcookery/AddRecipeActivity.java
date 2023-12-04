@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.PackageManagerCompat;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -89,7 +87,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         // Add intents for the text fields and button for add recipe
         edit_recipe_name_field = findViewById(R.id.edit_recipe_name_field);
         edit_estimated_time_field = findViewById(R.id.edit_estimated_time_field);
-        edit_ingredients_field = findViewById(R.id.edit_ingredients_field);
+        edit_ingredients_field = findViewById(R.id.edit_ingredients_contains_field);
         edit_instructions_field = findViewById(R.id.edit_instructions_field);
         edit_notes_field = findViewById(R.id.edit_notes_field);
 
@@ -109,7 +107,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
         // Buttons
-        recipe_addrecipe_btn = findViewById(R.id.recipe_addrecipe_btn);
+        recipe_addrecipe_btn = findViewById(R.id.filter_recipes_btn);
         recipe_addrecipe_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +115,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 gotoPreviousPage(v);
             }
         });
-        recipe_cancel_btn = findViewById(R.id.recipe_cancel_btn);
+        recipe_cancel_btn = findViewById(R.id.cancel_btn);
         recipe_cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

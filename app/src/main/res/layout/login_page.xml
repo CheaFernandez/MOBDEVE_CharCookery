@@ -40,7 +40,7 @@
             android:text="Username" />
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/usernameEt"
             style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
@@ -58,7 +58,7 @@
             android:text="Password" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/passwordEt"
             style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
@@ -74,7 +74,7 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/recipe_cancel_btn"
+                android:id="@+id/cancel_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
@@ -90,7 +90,7 @@
                 tools:ignore="VisualLintButtonSize" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/addcategory_btn"
+                android:id="@+id/register_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"

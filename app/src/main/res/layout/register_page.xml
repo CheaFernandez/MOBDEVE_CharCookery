@@ -27,7 +27,7 @@
             android:layout_gravity="start|top|center_vertical"
             android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif"
-            android:text="@string/new_category_txt"
+            android:text="Register"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -37,16 +37,52 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
             android:layout_marginBottom="4dp"
-            android:text="@string/title_txt" />
+            android:text="Username" />
 
         <EditText
-            android:id="@+id/edit_title_field"
+            android:id="@+id/usernameEt"
+            style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
             android:ems="10"
             android:importantForAutofill="no"
             android:inputType="text"
+            tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+
+        <TextView
+            android:id="@+id/category_title3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginBottom="4dp"
+            android:text="Email" />
+
+        <EditText
+            android:id="@+id/emailEt"
             style="@style/TextInput"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
+
+        <TextView
+            android:id="@+id/category_title2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginBottom="4dp"
+            android:text="Password" />
+
+        <EditText
+            android:id="@+id/passwordEt"
+            style="@style/TextInput"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="text"
             tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
         <LinearLayout
@@ -82,7 +118,7 @@
                 android:onClick="add_category"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="@string/addcategory_btn_txt"
+                android:text="Register"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="12sp"
                 tools:ignore="VisualLintButtonSize" />

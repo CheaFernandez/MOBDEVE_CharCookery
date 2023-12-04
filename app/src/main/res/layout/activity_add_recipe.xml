@@ -67,23 +67,24 @@
                     android:scaleType="fitXY"
                     app:srcCompat="@drawable/empty_field" />
             </RelativeLayout>
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/upload_image_btn"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/primary_rounded"
-                    android:minHeight="0dp"
-                    android:onClick="add_category"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Upload Image"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textSize="12sp"
-                    tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/upload_image_btn"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/primary_rounded"
+                android:minHeight="0dp"
+                android:onClick="add_category"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Upload Image"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="12sp"
+                tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,7 +162,7 @@
                     android:textSize="12sp" />
 
                 <EditText
-                    android:id="@+id/edit_ingredients_field"
+                    android:id="@+id/edit_ingredients_contains_field"
                     style="@style/TextInput"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
@@ -218,7 +219,7 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/recipe_cancel_btn"
+                        android:id="@+id/cancel_btn"
                         android:layout_width="350dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="6dp"
@@ -234,7 +235,7 @@
                         tools:ignore="VisualLintButtonSize,TouchTargetSizeCheck" />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/recipe_addrecipe_btn"
+                        android:id="@+id/filter_recipes_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"

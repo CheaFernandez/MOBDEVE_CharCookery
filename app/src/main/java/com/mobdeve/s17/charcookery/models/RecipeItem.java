@@ -14,7 +14,7 @@ import java.net.URL;
 
 public class RecipeItem implements Serializable {
     private int imageResource;
-    private Boolean isFavorite;
+    private boolean isFavorite;
 
     @SerializedName("id")
     private String id;
@@ -68,6 +68,7 @@ public class RecipeItem implements Serializable {
         this.instructions = instructions;
         this.ingredients = ingredients;
         this.sourceUrl = sourceUrl;
+        this.isFavorite = false;
     }
 
     public Bitmap getImageResource() {

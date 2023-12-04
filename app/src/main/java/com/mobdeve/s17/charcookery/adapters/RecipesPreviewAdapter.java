@@ -53,6 +53,10 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
     public void onBindViewHolder(@NonNull RecipePreviewHolder holder, int position) {
         RecipeItem currentItem = recipeItems.get(position);
 
+        if (currentItem == null) {
+            return;
+        }
+
         Context context = holder.itemView.getContext();
 
         Picasso.get().load(currentItem.getCoverImage()).into(holder.ivThumbnail);

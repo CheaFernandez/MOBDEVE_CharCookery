@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.R;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class CollectionRecipesAdapter extends RecyclerView.Adapter<CollectionRec
     public void onBindViewHolder(@NonNull CollectionViewHolder holder, int position) {
         RecipeItem currentItem = recipeItems.get(position);
 
-        holder.ivThumbnail.setImageResource(currentItem.getImageResource());
+        Picasso.get().load(currentItem.getCoverImage()).into(holder.ivThumbnail);
         holder.tvTitle.setText(currentItem.getTitle());
         holder.tvCategory.setText(currentItem.getCategory());
 

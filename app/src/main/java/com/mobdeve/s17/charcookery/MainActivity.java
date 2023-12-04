@@ -13,14 +13,11 @@ import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.components.RecipeCollectionPreview;
 import com.mobdeve.s17.charcookery.models.Mocker;
-import com.mobdeve.s17.charcookery.models.Recipe;
 import com.mobdeve.s17.charcookery.models.RecipeCollection;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,21 +49,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getCommunityRecipes() {
-        Call<List<Recipe>> call = apiInterface.getListCommunityRecipes();
-        call.enqueue(new Callback<List<Recipe>>() {
+        Call<List<RecipeItem>> call = apiInterface.getListCommunityRecipes();
+        call.enqueue(new Callback<List<RecipeItem>>() {
             @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+            public void onResponse(Call<List<RecipeItem>> call, Response<List<RecipeItem>> response) {
                 Log.d("TAG",response.code()+"");
 
                 if (response.isSuccessful()) {
-                    List<Recipe> recipes = response.body();
+                    List<RecipeItem> recipes = response.body();
                     if (recipes != null) {
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+            public void onFailure(Call<List<RecipeItem>> call, Throwable t) {
                 call.cancel();
             }
         });

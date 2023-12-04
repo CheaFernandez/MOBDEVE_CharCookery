@@ -50,6 +50,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.1.0")
     implementation("com.squareup.okhttp3:logging-interceptor:3.4.1")
 
+    implementation("com.squareup.picasso:picasso:2.8")
+
     testImplementation("junit:junit:4.13.2")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")

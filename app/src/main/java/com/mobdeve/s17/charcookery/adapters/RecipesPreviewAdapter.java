@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.R;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -52,11 +53,13 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
     public void onBindViewHolder(@NonNull RecipePreviewHolder holder, int position) {
         RecipeItem currentItem = recipeItems.get(position);
 
-        holder.ivThumbnail.setImageResource(currentItem.getImageResource());
+        Context context = holder.itemView.getContext();
+
+        Picasso.get().load(currentItem.getCoverImage()).into(holder.ivThumbnail);
         holder.tvTitle.setText(currentItem.getTitle());
         holder.tvCategory.setText(currentItem.getCategory());
 
-        Context context = holder.itemView.getContext();
+
         Drawable dwHeartFilled = ContextCompat.getDrawable(context, R.drawable.heart_filled);
         Drawable dwHeartOutline = ContextCompat.getDrawable(context, R.drawable.heart_outline);
 

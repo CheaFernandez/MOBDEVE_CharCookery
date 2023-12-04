@@ -31,25 +31,19 @@
             android:name=".CookingModeActivity"
             android:exported="false"/>
         <activity
-            android:name=".RecipeNotesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RecipeInstructionsActivity"
+            android:name=".AddRecipeActivity"
             android:exported="false"/>
         <activity
-            android:name=".AddRecipeActivity"
+            android:name=".RecipesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RecipesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RecipeActivity"
-            android:exported="false"/>
         <activity
             android:name=".FavoritesActivity"
             android:exported="false" />
@@ -62,13 +56,6 @@
         <activity
             android:name=".FilterRecipesActivity"
             android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".CollectionActivity" />
     </application>

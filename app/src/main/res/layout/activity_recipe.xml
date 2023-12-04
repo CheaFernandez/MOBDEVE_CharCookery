@@ -143,19 +143,24 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <ScrollView
+    <!-- ViewPager to switch between fragments -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+    <ImageButton
+        android:id="@+id/cookingModeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/primary_tag"
+        android:scaleType="fitCenter"
+        android:src="@drawable/start_cm_btn_txt" />
 
     <com.mobdeve.s17.charcookery.components.MenuBar
         android:layout_width="match_parent"
         android:layout_height="64dp"
         app:activePage="recipes" />
-
 </LinearLayout>

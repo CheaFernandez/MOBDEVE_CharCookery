@@ -45,7 +45,14 @@ public class CookingModeActivity extends AppCompatActivity {
         startTimerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startTimer();
+                // If the timer was set, start the timer
+                if (timeLeftInMillis != 0) {
+                    startTimer();
+                }
+                // Else pop up the time picker
+                else {
+                    popTimePicker(v);
+                }
             }
         });
 

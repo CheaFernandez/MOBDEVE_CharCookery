@@ -1,14 +1,16 @@
 package com.mobdeve.s17.charcookery;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.adapters.CategoryListAdapter;
+import com.mobdeve.s17.charcookery.api.APICaller;
 import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.components.RecipeCollectionPreview;
@@ -20,25 +22,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rvCategories;
     private RecyclerView.Adapter rvAdapter;
-    private ArrayList<RecipeItem> myRecipes;
 
     private ArrayList<RecipeCollection> recipeCollections;
     private ArrayList<String> categories;
 
     private APIInterface apiInterface;
 
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        context = this;
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         setupMockData();
@@ -49,24 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void fetchCommunityRecipes(String category, int id) {
         Call<List<RecipeItem>> call = apiInterface.getListCommunityRecipesFromCategory(category);
-        call.enqueue(new Callback<List<RecipeItem>>() {
+        APICaller.enqueue(call, new APICaller.APICallback<List<RecipeItem>>() {
             @Override
-            public void onResponse(Call<List<RecipeItem>> call, Response<List<RecipeItem>> response) {
-                Log.d("TAG",response.code()+"");
-
-                if (response.isSuccessful()) {
-                    List<RecipeItem> recipes = response.body();
-                    if (recipes != null) {
-                        RecipeCollection collectionResults = new RecipeCollection(category, (ArrayList<RecipeItem>) recipes);
-                        recipeCollections.add(collectionResults);
-                        initCustomCollection(collectionResults, id);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<RecipeItem>> call, Throwable t) {
-                call.cancel();
+            public void onSuccess(List<RecipeItem> recipes) {
+                RecipeCollection collectionResults = new RecipeCollection(category, new ArrayList<>(recipes));
+                recipeCollections.add(collectionResults);
+                initCustomCollection(collectionResults, id);
             }
         });
     }
@@ -87,13 +77,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCollectionPreviews() {
+        // Initialize community recipes preview
         recipeCollections = new ArrayList<RecipeCollection>();
         fetchCommunityRecipes("Weekly Meal Plans", 1);
         fetchCommunityRecipes("Dinner Date Ideas", 2);
 
         RecipeCollectionPreview collectionMyRecipes = findViewById(R.id.collectionMyRecipes);
         collectionMyRecipes.setTitle("My Recipes");
-        collectionMyRecipes.setRecipes(myRecipes);
+
+        // Get user id
+        SharedPreferences prefs = context.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        String userId = prefs.getString(Constants.SP_USER_ID, null);
+
+        // Initialize user recipes preview
+        Call<List<RecipeItem>> call = apiInterface.getRecipesForUser(userId);
+        APICaller.enqueue(call, new APICaller.APICallback<List<RecipeItem>>() {
+            @Override
+            public void onSuccess(List<RecipeItem> recipes) {
+                // Display up to first 5 recipes
+                int maxItems = Math.min(5, recipes.size());
+                List<RecipeItem> itemsToPreview = recipes.subList(0, maxItems);
+                collectionMyRecipes.setRecipes(new ArrayList<>(itemsToPreview));
+            }
+        });
     }
 
     private void initCategories() {
@@ -105,25 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupMockData() {
         // NOTE: For MCO2 only
-        // Setup user recipes
-        myRecipes = Mocker.generateRecipeItems(5, 12);
-
         // Generate categories (just names, no recipes yet)
         this.categories = Mocker.generateCategoryNames(5);
-
-        // Setup custom recipe collections (not user-generated; provided by server)
-        // Each collection has 3-10 recipes (randomized mock data)
-
-        /*
-        recipeCollections = new ArrayList<RecipeCollection>(){
-            {
-                add(new RecipeCollection("All Time Recipes", getCommunityRecipes("All Time Recipes")));
-                add(new RecipeCollection("Weekly Meal Plans", Mocker.generateRecipeItems(3, 10)));
-                add(new RecipeCollection("Dinner Date Ideas", Mocker.generateRecipeItems(3, 10)));
-            }
-        };
-        */
-
     }
 
     public void gotoAddCategoryView(View view) {

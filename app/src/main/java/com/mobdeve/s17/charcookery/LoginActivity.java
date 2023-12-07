@@ -84,9 +84,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private static void saveUserId(Context context, String userId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("com.mobdeve.s14.charcookery", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("USER_ID", userId);
+        editor.putString(Constants.SP_USER_ID, userId);
         editor.apply();
     }
 }

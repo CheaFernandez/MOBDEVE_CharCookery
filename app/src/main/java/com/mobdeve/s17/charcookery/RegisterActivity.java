@@ -9,14 +9,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.mobdeve.s17.charcookery.api.APICaller;
 import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.api.models.AccessTokenResponse;
 import com.mobdeve.s17.charcookery.api.models.CreateAccountBody;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -46,29 +45,18 @@ public class RegisterActivity extends AppCompatActivity {
             String password =  passwordEt.getText().toString();
 
             CreateAccountBody credentials = new CreateAccountBody(email, password);
+
             Call<AccessTokenResponse> call = apiInterface.createAccount(credentials);
 
-            call.enqueue(new Callback<AccessTokenResponse>() {
+            APICaller.enqueue(call, new APICaller.APICallback<AccessTokenResponse>() {
                 @Override
-                public void onResponse(Call<AccessTokenResponse> call, Response<AccessTokenResponse> response) {
-                    if (response.isSuccessful()) {
-                        AccessTokenResponse firebaseUser = response.body();
+                public void onSuccess(AccessTokenResponse firebaseUser) {
+                    String uid = firebaseUser.getUid();
+                    saveUserId(context, uid);
 
-                        // "login"
-                        String uid = firebaseUser.getUid();
-                        saveUserId(context, uid);
-
-                        // start activity intent to Main
-                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        // Handle error
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<AccessTokenResponse> call, Throwable t) {
-                    // Handle failure
+                    // start activity intent to Main
+                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             });
         });
@@ -80,9 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private static void saveUserId(Context context, String userId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("com.mobdeve.s14.charcookery", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("USER_ID", userId);
+        editor.putString(Constants.SP_USER_ID, userId);
         editor.apply();
     }
 }

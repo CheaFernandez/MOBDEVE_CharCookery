@@ -43,6 +43,8 @@ public class RecipeItem implements Serializable {
     @SerializedName("source_url")
     private String sourceUrl;
 
+    private String userId;
+
     public RecipeItem(int imageResource, String title, String category) {
         this.imageResource = imageResource;
         this.name = title;
@@ -59,6 +61,7 @@ public class RecipeItem implements Serializable {
 
     public RecipeItem(String id, String category, String name, String notes, int durationMinutes,
                   String coverImage, String[] instructions, String[] ingredients, String sourceUrl) {
+        // For community recipes
         this.id = id;
         this.category = category;
         this.name = name;
@@ -69,6 +72,21 @@ public class RecipeItem implements Serializable {
         this.ingredients = ingredients;
         this.sourceUrl = sourceUrl;
         this.isFavorite = false;
+    }
+
+    public RecipeItem(String id, String category, String name, String notes, int durationMinutes,
+                      String coverImage, String[] instructions, String[] ingredients, boolean isFavorite, String userId) {
+        // For user recipes
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.notes = notes;
+        this.durationMinutes = durationMinutes;
+        this.coverImage = coverImage;
+        this.instructions = instructions;
+        this.ingredients = ingredients;
+        this.isFavorite = isFavorite;
+        this.userId = userId;
     }
 
     public Bitmap getImageResource() {

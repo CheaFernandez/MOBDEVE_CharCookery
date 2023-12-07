@@ -1,6 +1,7 @@
 package com.mobdeve.s17.charcookery.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.R;
+import com.mobdeve.s17.charcookery.RecipeActivity;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 import com.squareup.picasso.Picasso;
 
@@ -46,6 +48,21 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
     @Override
     public RecipePreviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_recipe, parent, false);
+
+        ImageView recipePreviewImg = v.findViewById(R.id.recipePreviewImg);
+        TextView recipePreviewTitle = v.findViewById(R.id.recipePreviewTitle);
+
+        View.OnClickListener recipePreviewListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RecipeActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        };
+
+        recipePreviewImg.setOnClickListener(recipePreviewListener);
+        recipePreviewTitle.setOnClickListener(recipePreviewListener);
+
         return new RecipePreviewHolder(v);
     }
 

@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Camera Permission - Your application must request permission to use a device camera. -->
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-feature android:name="android.hardware.camera" />
+
     <!--
         Storage Permission - Your application can save images or videos to the device's external
         storage (SD Card) if it targets Android 10 (API level 29) or lower and specifies the following
         in the manifest.
     -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Network Permissions - Needed for HTTP client (Retrofit) to work -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Network Permissions - Needed for HTTP client (Retrofit) to work -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -35,25 +37,20 @@
             android:name=".AddRecipeActivity"
             android:exported="false" />
         <activity
-            android:name=".RecipesActivity"
-            android:exported="false" />
-        <activity
             android:name=".RecipeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FavoritesActivity"
             android:exported="false" />
         <activity
             android:name=".AddCategory"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".FilterRecipesActivity"
-            android:exported="false"></activity>
-        <activity android:name=".CollectionActivity" />
+            android:exported="false" />
+        <activity
+            android:name=".CollectionActivity"
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
@@ -62,7 +59,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

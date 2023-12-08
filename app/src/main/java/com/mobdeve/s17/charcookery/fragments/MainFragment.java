@@ -15,7 +15,6 @@ import com.mobdeve.s17.charcookery.CollectionActivity;
 import com.mobdeve.s17.charcookery.Constants;
 import com.mobdeve.s17.charcookery.MainActivity;
 import com.mobdeve.s17.charcookery.R;
-import com.mobdeve.s17.charcookery.RecipesActivity;
 import com.mobdeve.s17.charcookery.adapters.CategoryListAdapter;
 import com.mobdeve.s17.charcookery.api.APICaller;
 import com.mobdeve.s17.charcookery.api.APIClient;

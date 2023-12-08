@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.mobdeve.s17.charcookery.fragments.FavoritesFragment;
 import com.mobdeve.s17.charcookery.fragments.MainFragment;
 import com.mobdeve.s17.charcookery.fragments.RecipesFragment;
 
 public class MainActivity extends AppCompatActivity {
     private Fragment mainFragment;
     private Fragment recipesFragment;
+    private Fragment favoritesFragment;
+
     private MenuManager menuManager;
     private FragmentManager fragmentManager;
 
@@ -54,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         setFragment(recipesFragment);
     }
 
+    public void switchToFavoritesView() {
+        if (favoritesFragment == null) {
+            favoritesFragment = new FavoritesFragment();
+        }
+        setFragment(favoritesFragment);
+    }
+
     public void gotoAddCategoryView(View view) {
         Intent intent = new Intent(this, AddCategory.class);
         startActivity(intent);
@@ -64,12 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentFragment != null) {
             switch (currentFragment.getClass().getSimpleName()) {
-                case "MainFragment":
-                    menuManager.setActiveTab(Page.HOME);
-                    break;
-                case "RecipesFragment":
-                    menuManager.setActiveTab(Page.RECIPES);
-                    break;
+                case "MainFragment":        menuManager.setActiveTab(Page.HOME); break;
+                case "RecipesFragment":     menuManager.setActiveTab(Page.RECIPES); break;
+                case "FavoritesFragment":   menuManager.setActiveTab(Page.FAVORITES); break;
             }
         }
     }
@@ -95,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
             tabRecipes.setOnClickListener(getTabClickListener(Page.RECIPES));
 
             tabFavorites = findViewById(R.id.menuFavorites);
+            tabFavorites.setOnClickListener(getTabClickListener(Page.FAVORITES));
+
             tabUserProfile = findViewById(R.id.menuUser);
         }
 
@@ -103,14 +112,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     switch (page) {
-                        case HOME:
-                            switchToMainView(); return;
-                        case RECIPES:
-                            switchToRecipesView(); return;
-                        case FAVORITES:
-                            // TODO: Implement
-                        case USER_PROFILE:
-                            // TODO: implement
+                        case HOME:          switchToMainView(); return;
+                        case RECIPES:       switchToRecipesView(); return;
+                        case FAVORITES:     switchToFavoritesView(); return;
+                        case USER_PROFILE: // TODO: implement
                     }
                 }
             };
@@ -124,18 +129,10 @@ public class MainActivity extends AppCompatActivity {
             tabUserProfile.setImageResource(R.drawable.user_outline);
 
             switch (page) {
-                case HOME:
-                    tabHome.setImageResource(R.drawable.home_filled);
-                    break;
-                case RECIPES:
-                    tabRecipes.setImageResource(R.drawable.book_filled);
-                    break;
-                case FAVORITES:
-                    tabFavorites.setImageResource(R.drawable.heart_filled);
-                    break;
-                case USER_PROFILE:
-                    tabUserProfile.setImageResource(R.drawable.user_filled);
-                    break;
+                case HOME:          tabHome.setImageResource(R.drawable.home_filled); break;
+                case RECIPES:       tabRecipes.setImageResource(R.drawable.book_filled); break;
+                case FAVORITES:     tabFavorites.setImageResource(R.drawable.heart_filled); break;
+                case USER_PROFILE:  tabUserProfile.setImageResource(R.drawable.user_filled); break;
             }
         }
     }

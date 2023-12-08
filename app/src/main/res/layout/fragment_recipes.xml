@@ -4,14 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".RecipesActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:src="@drawable/charcookery_logo"
-        android:paddingTop="10dp" />
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,12 +15,13 @@
         android:orientation="horizontal">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:drawableLeft="@drawable/icon_search"
             android:drawablePadding="8dp"
             android:layout_weight="1"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             style="@style/TextInput" />
 
         <ImageButton
@@ -51,7 +45,7 @@
     <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:paddingTop="8dp"
         android:paddingStart="16dp"
@@ -73,8 +67,4 @@
         </ScrollView>
     </LinearLayout>
 
-    <com.mobdeve.s17.charcookery.components.MenuBar
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        app:activePage="recipes" />
 </LinearLayout>

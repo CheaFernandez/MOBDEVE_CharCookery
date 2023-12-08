@@ -1,118 +1,82 @@
 package com.mobdeve.s17.charcookery;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.mobdeve.s17.charcookery.adapters.CategoryListAdapter;
-import com.mobdeve.s17.charcookery.api.APICaller;
-import com.mobdeve.s17.charcookery.api.APIClient;
-import com.mobdeve.s17.charcookery.api.APIInterface;
-import com.mobdeve.s17.charcookery.components.RecipeCollectionPreview;
-import com.mobdeve.s17.charcookery.models.Mocker;
+import com.mobdeve.s17.charcookery.fragments.CollectionFragment;
+import com.mobdeve.s17.charcookery.fragments.FavoritesFragment;
+import com.mobdeve.s17.charcookery.fragments.MainFragment;
+import com.mobdeve.s17.charcookery.fragments.RecipesFragment;
+import com.mobdeve.s17.charcookery.fragments.UserProfileFragment;
 import com.mobdeve.s17.charcookery.models.RecipeCollection;
-import com.mobdeve.s17.charcookery.models.RecipeItem;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity {
+    private Fragment mainFragment;
+    private Fragment recipesFragment;
+    private Fragment favoritesFragment;
+    private Fragment userProfileFragment;
 
-    private RecyclerView rvCategories;
-    private RecyclerView.Adapter rvAdapter;
-
-    private ArrayList<RecipeCollection> recipeCollections;
-    private ArrayList<String> categories;
-
-    private APIInterface apiInterface;
-
-    private Context context;
+    private MenuManager menuManager;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        context = this;
-        apiInterface = APIClient.getClient().create(APIInterface.class);
+        menuManager = new MenuManager();
 
-        setupMockData();
-
-        initCollectionPreviews();
-        initCategories();
+        // Setup initial fragment
+        switchToMainView();
     }
 
-    private void fetchCommunityRecipes(String category, int id) {
-        Call<List<RecipeItem>> call = apiInterface.getListCommunityRecipesFromCategory(category);
-        APICaller.enqueue(call, new APICaller.APICallback<List<RecipeItem>>() {
-            @Override
-            public void onSuccess(List<RecipeItem> recipes) {
-                RecipeCollection collectionResults = new RecipeCollection(category, new ArrayList<>(recipes));
-                recipeCollections.add(collectionResults);
-                initCustomCollection(collectionResults, id);
-            }
-        });
+    private void setFragment(Fragment fragment) {
+        fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentViewMain, fragment);
+        fragmentTransaction.addToBackStack(null); // Optional: add to back stack for fragment navigation
+        fragmentTransaction.commit();
     }
 
-    private void initCustomCollection(RecipeCollection collection, int id) {
-        RecipeCollectionPreview collectionPreview = findViewById(getResources().getIdentifier("collectionCustom" + id, "id", getPackageName()));
-
-        collectionPreview.setTitle(collection.getTitle());
-        collectionPreview.setRecipes(collection.getRecipes());
-        collectionPreview.setSeeAllClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CollectionActivity.class);
-                intent.putExtra("recipeCollection", collection);
-                startActivity(intent);
-            }
-        });
+    public void switchToMainView() {
+        if (mainFragment == null) {
+            mainFragment = new MainFragment();
+        }
+        setFragment(mainFragment);
     }
 
-    private void initCollectionPreviews() {
-        // Initialize community recipes preview
-        recipeCollections = new ArrayList<RecipeCollection>();
-        fetchCommunityRecipes("Weekly Meal Plans", 1);
-        fetchCommunityRecipes("Dinner Date Ideas", 2);
-
-        RecipeCollectionPreview collectionMyRecipes = findViewById(R.id.collectionMyRecipes);
-        collectionMyRecipes.setTitle("My Recipes");
-
-        // Get user id
-        SharedPreferences prefs = context.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
-        String userId = prefs.getString(Constants.SP_USER_ID, null);
-
-        // Initialize user recipes preview
-        Call<List<RecipeItem>> call = apiInterface.getRecipesForUser(userId);
-        APICaller.enqueue(call, new APICaller.APICallback<List<RecipeItem>>() {
-            @Override
-            public void onSuccess(List<RecipeItem> recipes) {
-                // Display up to first 5 recipes
-                int maxItems = Math.min(5, recipes.size());
-                List<RecipeItem> itemsToPreview = recipes.subList(0, maxItems);
-                collectionMyRecipes.setRecipes(new ArrayList<>(itemsToPreview));
-            }
-        });
+    public void switchToRecipesView() {
+        if (recipesFragment == null) {
+            recipesFragment = new RecipesFragment();
+        }
+        setFragment(recipesFragment);
     }
 
-    private void initCategories() {
-        rvCategories = findViewById(R.id.rvCategories);
-
-        rvAdapter = new CategoryListAdapter(categories);
-        rvCategories.setAdapter(rvAdapter);
+    public void switchToFavoritesView() {
+        if (favoritesFragment == null) {
+            favoritesFragment = new FavoritesFragment();
+        }
+        setFragment(favoritesFragment);
     }
 
-    private void setupMockData() {
-        // NOTE: For MCO2 only
-        // Generate categories (just names, no recipes yet)
-        this.categories = Mocker.generateCategoryNames(5);
+    public void switchToCollectionView(RecipeCollection collection) {
+        Fragment collectionFragment = new CollectionFragment(collection);
+        setFragment(collectionFragment);
+    }
+
+    public void switchToUserProfileView() {
+        if (userProfileFragment == null) {
+            userProfileFragment = new UserProfileFragment();
+        }
+        setFragment(userProfileFragment);
     }
 
     public void gotoAddCategoryView(View view) {
@@ -120,8 +84,72 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void gotoRecipeView(View view) {
-        Intent intent = new Intent(this, RecipeActivity.class);
-        startActivity(intent);
+    public void updateMenuBar() {
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragmentViewMain);
+
+        if (currentFragment != null) {
+            switch (currentFragment.getClass().getSimpleName()) {
+                case "MainFragment":        menuManager.setActiveTab(Page.HOME); break;
+                case "RecipesFragment":
+                case "CollectionFragment":  menuManager.setActiveTab(Page.RECIPES); break;
+                case "FavoritesFragment":   menuManager.setActiveTab(Page.FAVORITES); break;
+                case "UserProfileFragment": menuManager.setActiveTab(Page.USER_PROFILE); break;
+            }
+        }
+    }
+
+    public enum Page {
+        HOME,
+        RECIPES,
+        FAVORITES,
+        USER_PROFILE
+    }
+
+    public class MenuManager {
+        private final ImageView tabHome;
+        private final ImageView tabRecipes;
+        private final ImageView tabFavorites;
+        private final ImageView tabUserProfile;
+
+        public MenuManager() {
+            tabHome = findViewById(R.id.menuHome);
+            tabHome.setOnClickListener(getTabClickListener(Page.HOME));
+
+            tabRecipes = findViewById(R.id.menuRecipes);
+            tabRecipes.setOnClickListener(getTabClickListener(Page.RECIPES));
+
+            tabFavorites = findViewById(R.id.menuFavorites);
+            tabFavorites.setOnClickListener(getTabClickListener(Page.FAVORITES));
+
+            tabUserProfile = findViewById(R.id.menuUser);
+            tabUserProfile.setOnClickListener(getTabClickListener(Page.USER_PROFILE));
+        }
+
+        private View.OnClickListener getTabClickListener(Page page) {
+            return v -> {
+                switch (page) {
+                    case HOME:          switchToMainView(); return;
+                    case RECIPES:       switchToRecipesView(); return;
+                    case FAVORITES:     switchToFavoritesView(); return;
+                    case USER_PROFILE:  switchToUserProfileView(); return;
+                    default:            return;
+                }
+            };
+        }
+
+        public void setActiveTab(Page page) {
+            // Reset tab images
+            tabHome.setImageResource(R.drawable.home_outline);
+            tabRecipes.setImageResource(R.drawable.book_outline);
+            tabFavorites.setImageResource(R.drawable.heart_outline);
+            tabUserProfile.setImageResource(R.drawable.user_outline);
+
+            switch (page) {
+                case HOME:          tabHome.setImageResource(R.drawable.home_filled); break;
+                case RECIPES:       tabRecipes.setImageResource(R.drawable.book_filled); break;
+                case FAVORITES:     tabFavorites.setImageResource(R.drawable.heart_filled); break;
+                case USER_PROFILE:  tabUserProfile.setImageResource(R.drawable.user_filled); break;
+            }
+        }
     }
 }

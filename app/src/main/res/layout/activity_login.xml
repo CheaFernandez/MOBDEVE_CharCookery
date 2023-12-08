@@ -27,12 +27,12 @@
             android:layout_gravity="start|top|center_vertical"
             android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif"
-            android:text="Register"
+            android:text="Log In"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/category_title3"
+            android:id="@+id/category_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
@@ -40,7 +40,7 @@
             android:text="Email" />
 
         <EditText
-            android:id="@+id/registerEmailEt"
+            android:id="@+id/loginEmailEt"
             style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
@@ -58,7 +58,7 @@
             android:text="Password" />
 
         <EditText
-            android:id="@+id/registerPasswordEt"
+            android:id="@+id/loginPasswordEt"
             style="@style/TextInput"
             android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
@@ -97,10 +97,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/primary_rounded"
                 android:minHeight="0dp"
-                android:onClick="add_category"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:text="Register"
+                android:text="Log In"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textSize="12sp"
                 tools:ignore="VisualLintButtonSize" />

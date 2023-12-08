@@ -1,7 +1,6 @@
 package com.mobdeve.s17.charcookery.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mobdeve.s17.charcookery.CollectionActivity;
 import com.mobdeve.s17.charcookery.Constants;
 import com.mobdeve.s17.charcookery.MainActivity;
 import com.mobdeve.s17.charcookery.R;
@@ -30,10 +28,6 @@ import java.util.List;
 import retrofit2.Call;
 
 public class MainFragment extends Fragment {
-    private RecyclerView rvCategories;
-    private RecyclerView.Adapter rvAdapter;
-
-    private ArrayList<String> categories;
 
     private Context context;
     private View view;
@@ -52,10 +46,10 @@ public class MainFragment extends Fragment {
         ((MainActivity) getActivity()).updateMenuBar();
 
         // Setup RecyclerView for Categories
-        rvCategories = view.findViewById(R.id.rvCategories);
-        this.categories = Mocker.generateCategoryNames(5); // TODO: Replace with data from API
+        RecyclerView rvCategories = view.findViewById(R.id.rvCategories);
+        ArrayList<String> categories = Mocker.generateCategoryNames(5); // TODO: Replace with data from API
 
-        rvAdapter = new CategoryListAdapter(categories);
+        RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder> rvAdapter = new CategoryListAdapter(categories);
         rvCategories.setAdapter(rvAdapter);
 
         // Setup User Recipes - "My Recipes"
@@ -95,20 +89,12 @@ public class MainFragment extends Fragment {
         // Fetch user recipes from API
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<List<RecipeItem>> call = apiInterface.getRecipesForUser(userId);
-        APICaller.enqueue(call, new APICaller.APICallback<List<RecipeItem>>() {
-            @Override
-            public void onSuccess(List<RecipeItem> recipes) {
-                // On successful fetch result, display up to the first 5 recipes
-                ArrayList<RecipeItem> recipeItemsToPreview = getRecipeItemPreviews(recipes);
-                collectionMyRecipes.setRecipes(recipeItemsToPreview);
+        APICaller.enqueue(call, recipes -> {
+            // On successful fetch result, display up to the first 5 recipes
+            ArrayList<RecipeItem> recipeItemsToPreview = getRecipeItemPreviews(recipes);
+            collectionMyRecipes.setRecipes(recipeItemsToPreview);
 
-                collectionMyRecipes.setSeeAllClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((MainActivity) getActivity()).switchToRecipesView();
-                    }
-                });
-            }
+            collectionMyRecipes.setSeeAllClickListener(v -> ((MainActivity) getActivity()).switchToRecipesView());
         });
     }
 
@@ -122,26 +108,14 @@ public class MainFragment extends Fragment {
         // Fetch community recipes from API
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<List<RecipeItem>> call = apiInterface.getListCommunityRecipesFromCategory(title);
-        APICaller.enqueue(call, new APICaller.APICallback<List<RecipeItem>>() {
-            @Override
-            public void onSuccess(List<RecipeItem> recipes) {
-                // Fix data (collection and preview items)
-                RecipeCollection collectionWMP = new RecipeCollection(title, new ArrayList<>(recipes));
-                ArrayList<RecipeItem> previewItems = getRecipeItemPreviews(recipes);
+        APICaller.enqueue(call, recipes -> {
+            // Fix data (collection and preview items)
+            RecipeCollection collection = new RecipeCollection(title, new ArrayList<>(recipes));
+            ArrayList<RecipeItem> previewItems = getRecipeItemPreviews(recipes);
 
-                // Fill collection preview with data
-                collectionCommunityRecipes.setRecipes(previewItems);
-                collectionCommunityRecipes.setSeeAllClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, CollectionActivity.class);
-
-                        // Pass recipe collection (title and list of recipe items) to CollectionActivity
-                        intent.putExtra("recipeCollection", collectionWMP);
-                        startActivity(intent);
-                    }
-                });
-            }
+            // Fill collection preview with data
+            collectionCommunityRecipes.setRecipes(previewItems);
+            collectionCommunityRecipes.setSeeAllClickListener(v -> ((MainActivity) getActivity()).switchToCollectionView(collection));
         });
     }
 }

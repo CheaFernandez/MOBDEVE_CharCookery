@@ -1,6 +1,5 @@
 package com.mobdeve.s17.charcookery;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.mobdeve.s17.charcookery.fragments.CollectionFragment;
 import com.mobdeve.s17.charcookery.fragments.FavoritesFragment;
 import com.mobdeve.s17.charcookery.fragments.MainFragment;
 import com.mobdeve.s17.charcookery.fragments.RecipesFragment;
+import com.mobdeve.s17.charcookery.models.RecipeCollection;
 
 public class MainActivity extends AppCompatActivity {
     private Fragment mainFragment;
@@ -64,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         setFragment(favoritesFragment);
     }
 
+    public void switchToCollectionView(RecipeCollection collection) {
+        Fragment collectionFragment = new CollectionFragment(collection);
+        setFragment(collectionFragment);
+    }
+
     public void gotoAddCategoryView(View view) {
         Intent intent = new Intent(this, AddCategory.class);
         startActivity(intent);
@@ -75,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
         if (currentFragment != null) {
             switch (currentFragment.getClass().getSimpleName()) {
                 case "MainFragment":        menuManager.setActiveTab(Page.HOME); break;
-                case "RecipesFragment":     menuManager.setActiveTab(Page.RECIPES); break;
+                case "RecipesFragment":
+                case "CollectionFragment":  menuManager.setActiveTab(Page.RECIPES); break;
                 case "FavoritesFragment":   menuManager.setActiveTab(Page.FAVORITES); break;
             }
         }
@@ -108,15 +115,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private View.OnClickListener getTabClickListener(Page page) {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (page) {
-                        case HOME:          switchToMainView(); return;
-                        case RECIPES:       switchToRecipesView(); return;
-                        case FAVORITES:     switchToFavoritesView(); return;
-                        case USER_PROFILE: // TODO: implement
-                    }
+            return v -> {
+                switch (page) {
+                    case HOME:          switchToMainView(); return;
+                    case RECIPES:       switchToRecipesView(); return;
+                    case FAVORITES:     switchToFavoritesView(); return;
+                    case USER_PROFILE: // TODO: implement
                 }
             };
         }

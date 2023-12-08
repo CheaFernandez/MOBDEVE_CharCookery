@@ -49,9 +49,6 @@
             android:name=".FilterRecipesActivity"
             android:exported="false" />
         <activity
-            android:name=".CollectionActivity"
-            android:exported="false" />
-        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity

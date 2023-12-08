@@ -14,12 +14,14 @@ import com.mobdeve.s17.charcookery.fragments.CollectionFragment;
 import com.mobdeve.s17.charcookery.fragments.FavoritesFragment;
 import com.mobdeve.s17.charcookery.fragments.MainFragment;
 import com.mobdeve.s17.charcookery.fragments.RecipesFragment;
+import com.mobdeve.s17.charcookery.fragments.UserProfileFragment;
 import com.mobdeve.s17.charcookery.models.RecipeCollection;
 
 public class MainActivity extends AppCompatActivity {
     private Fragment mainFragment;
     private Fragment recipesFragment;
     private Fragment favoritesFragment;
+    private Fragment userProfileFragment;
 
     private MenuManager menuManager;
     private FragmentManager fragmentManager;
@@ -70,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
         setFragment(collectionFragment);
     }
 
+    public void switchToUserProfileView() {
+        if (userProfileFragment == null) {
+            userProfileFragment = new UserProfileFragment();
+        }
+        setFragment(userProfileFragment);
+    }
+
     public void gotoAddCategoryView(View view) {
         Intent intent = new Intent(this, AddCategory.class);
         startActivity(intent);
@@ -84,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 case "RecipesFragment":
                 case "CollectionFragment":  menuManager.setActiveTab(Page.RECIPES); break;
                 case "FavoritesFragment":   menuManager.setActiveTab(Page.FAVORITES); break;
+                case "UserProfileFragment": menuManager.setActiveTab(Page.USER_PROFILE); break;
             }
         }
     }
@@ -112,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             tabFavorites.setOnClickListener(getTabClickListener(Page.FAVORITES));
 
             tabUserProfile = findViewById(R.id.menuUser);
+            tabUserProfile.setOnClickListener(getTabClickListener(Page.USER_PROFILE));
         }
 
         private View.OnClickListener getTabClickListener(Page page) {
@@ -120,7 +131,8 @@ public class MainActivity extends AppCompatActivity {
                     case HOME:          switchToMainView(); return;
                     case RECIPES:       switchToRecipesView(); return;
                     case FAVORITES:     switchToFavoritesView(); return;
-                    case USER_PROFILE: // TODO: implement
+                    case USER_PROFILE:  switchToUserProfileView(); return;
+                    default:            return;
                 }
             };
         }

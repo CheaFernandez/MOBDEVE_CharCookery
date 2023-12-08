@@ -5,11 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.mobdeve.s17.charcookery.IngredientsFragment;
-import com.mobdeve.s17.charcookery.InstructionsFragment;
+import com.mobdeve.s17.charcookery.fragments.TextListFragment;
 import com.mobdeve.s17.charcookery.NotesFragment;
-
-import java.util.ArrayList;
 
 public class RecipePagerAdapter extends FragmentPagerAdapter {
 
@@ -30,8 +27,8 @@ public class RecipePagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0: return new IngredientsFragment(ingredients);
-            case 1: return new InstructionsFragment();
+            case 0: return new TextListFragment(ingredients);
+            case 1: return new TextListFragment(instructions, true);
             case 2: return new NotesFragment();
             default: return new Fragment();
         }

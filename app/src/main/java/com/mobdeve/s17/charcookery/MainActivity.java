@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,31 +12,131 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.mobdeve.s17.charcookery.fragments.MainFragment;
+import com.mobdeve.s17.charcookery.fragments.RecipesFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private Context context;
+    private Fragment mainFragment;
+    private Fragment recipesFragment;
+    private MenuManager menuManager;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        context = this;
+        menuManager = new MenuManager();
 
         // Setup initial fragment
-        setFragment(new MainFragment());
+        switchToMainView();
     }
 
     private void setFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentViewMain, fragment);
         fragmentTransaction.addToBackStack(null); // Optional: add to back stack for fragment navigation
         fragmentTransaction.commit();
     }
 
+    public void switchToMainView() {
+        if (mainFragment == null) {
+            mainFragment = new MainFragment();
+        }
+        setFragment(mainFragment);
+    }
+
+    public void switchToRecipesView() {
+        if (recipesFragment == null) {
+            recipesFragment = new RecipesFragment();
+        }
+        setFragment(recipesFragment);
+    }
+
     public void gotoAddCategoryView(View view) {
         Intent intent = new Intent(this, AddCategory.class);
         startActivity(intent);
+    }
+
+    public void updateMenuBar() {
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragmentViewMain);
+
+        if (currentFragment != null) {
+            switch (currentFragment.getClass().getSimpleName()) {
+                case "MainFragment":
+                    menuManager.setActiveTab(Page.HOME);
+                    break;
+                case "RecipesFragment":
+                    menuManager.setActiveTab(Page.RECIPES);
+                    break;
+            }
+        }
+    }
+
+    public enum Page {
+        HOME,
+        RECIPES,
+        FAVORITES,
+        USER_PROFILE
+    }
+
+    public class MenuManager {
+        private final ImageView tabHome;
+        private final ImageView tabRecipes;
+        private final ImageView tabFavorites;
+        private final ImageView tabUserProfile;
+
+        public MenuManager() {
+            tabHome = findViewById(R.id.menuHome);
+            tabHome.setOnClickListener(getTabClickListener(Page.HOME));
+
+            tabRecipes = findViewById(R.id.menuRecipes);
+            tabRecipes.setOnClickListener(getTabClickListener(Page.RECIPES));
+
+            tabFavorites = findViewById(R.id.menuFavorites);
+            tabUserProfile = findViewById(R.id.menuUser);
+        }
+
+        private View.OnClickListener getTabClickListener(Page page) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch (page) {
+                        case HOME:
+                            switchToMainView(); return;
+                        case RECIPES:
+                            switchToRecipesView(); return;
+                        case FAVORITES:
+                            // TODO: Implement
+                        case USER_PROFILE:
+                            // TODO: implement
+                    }
+                }
+            };
+        }
+
+        public void setActiveTab(Page page) {
+            // Reset tab images
+            tabHome.setImageResource(R.drawable.home_outline);
+            tabRecipes.setImageResource(R.drawable.book_outline);
+            tabFavorites.setImageResource(R.drawable.heart_outline);
+            tabUserProfile.setImageResource(R.drawable.user_outline);
+
+            switch (page) {
+                case HOME:
+                    tabHome.setImageResource(R.drawable.home_filled);
+                    break;
+                case RECIPES:
+                    tabRecipes.setImageResource(R.drawable.book_filled);
+                    break;
+                case FAVORITES:
+                    tabFavorites.setImageResource(R.drawable.heart_filled);
+                    break;
+                case USER_PROFILE:
+                    tabUserProfile.setImageResource(R.drawable.user_filled);
+                    break;
+            }
+        }
     }
 }

@@ -11,19 +11,17 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="42dp"
+        android:contentDescription="App header image"
         android:src="@drawable/charcookery_logo"
         android:paddingTop="10dp" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentViewMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         tools:layout="@layout/fragment_main" />
 
-    <com.mobdeve.s17.charcookery.components.MenuBar
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        app:activePage="home" />
+    <include layout="@layout/layout_menu" />
 
 </LinearLayout>

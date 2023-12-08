@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.CollectionActivity;
 import com.mobdeve.s17.charcookery.Constants;
+import com.mobdeve.s17.charcookery.MainActivity;
 import com.mobdeve.s17.charcookery.R;
 import com.mobdeve.s17.charcookery.RecipesActivity;
 import com.mobdeve.s17.charcookery.adapters.CategoryListAdapter;
@@ -39,7 +40,6 @@ public class MainFragment extends Fragment {
     private View view;
 
     public MainFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -48,6 +48,9 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         this.view = inflater.inflate(R.layout.fragment_main, container, false);
         this.context = getContext();
+
+        // Update menu bar
+        ((MainActivity) getActivity()).updateMenuBar();
 
         // Setup RecyclerView for Categories
         rvCategories = view.findViewById(R.id.rvCategories);
@@ -103,8 +106,7 @@ public class MainFragment extends Fragment {
                 collectionMyRecipes.setSeeAllClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, RecipesActivity.class);
-                        startActivity(intent);
+                        ((MainActivity) getActivity()).switchToRecipesView();
                     }
                 });
             }

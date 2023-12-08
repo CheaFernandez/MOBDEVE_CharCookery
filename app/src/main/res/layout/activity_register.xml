@@ -97,7 +97,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/primary_rounded"
                 android:minHeight="0dp"
-                android:onClick="add_category"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:text="Register"

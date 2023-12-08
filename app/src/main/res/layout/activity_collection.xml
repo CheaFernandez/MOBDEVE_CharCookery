@@ -52,8 +52,5 @@
 
     </ScrollView>
 
-    <com.mobdeve.s17.charcookery.components.MenuBar
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        app:activePage="recipes" />
+    <include layout="@layout/layout_menu" />
 </LinearLayout>

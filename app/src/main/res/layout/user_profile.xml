@@ -71,15 +71,7 @@
             android:textStyle="italic" />
     </LinearLayout>
 
-    <com.mobdeve.s17.charcookery.components.MenuBar
-        android:id="@+id/menuBar"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginBottom="1dp"
-        app:activePage="home"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <include layout="@layout/layout_menu" />
 
     <LinearLayout
         android:id="@+id/linearLayout"

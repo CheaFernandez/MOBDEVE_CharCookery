@@ -128,4 +128,12 @@
             tools:ignore="VisualLintButtonSize" />
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/editButtonName_Pic"
+        android:layout_width="42dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/icon_write"
+        tools:layout_editor_absoluteX="244dp"
+        tools:layout_editor_absoluteY="277dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

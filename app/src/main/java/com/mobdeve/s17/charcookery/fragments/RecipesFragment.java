@@ -1,5 +1,7 @@
 package com.mobdeve.s17.charcookery.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,9 +14,13 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mobdeve.s17.charcookery.Constants;
 import com.mobdeve.s17.charcookery.MainActivity;
 import com.mobdeve.s17.charcookery.R;
 import com.mobdeve.s17.charcookery.adapters.CollectionRecipesAdapter;
+import com.mobdeve.s17.charcookery.api.APICaller;
+import com.mobdeve.s17.charcookery.api.APIClient;
+import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.models.Mocker;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 import com.mobdeve.s17.charcookery.api.APIClient;
@@ -27,8 +33,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
-
-
 
 public class RecipesFragment extends Fragment {
     private RecyclerView rvRecipes;
@@ -66,11 +70,20 @@ public class RecipesFragment extends Fragment {
     }
 
     private void setupView() {
-        ArrayList<RecipeItem> recipes = Mocker.generateRecipeItems(3, 10); // TODO: Replace with API call
-
         rvRecipes = view.findViewById(R.id.rvRecipesGrid);
-        rvAdapter = new CollectionRecipesAdapter(recipes);
-        rvRecipes.setAdapter(rvAdapter);
+
+        // Get user id
+        SharedPreferences prefs = getContext().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        String userId = prefs.getString(Constants.SP_USER_ID, null);
+
+        // Fetch user recipes from API
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<List<RecipeItem>> call = apiInterface.getRecipesForUser(userId);
+        APICaller.enqueue(call, recipes -> {
+            // On successful fetch result, display up to the first 5 recipes
+            rvAdapter = new CollectionRecipesAdapter(new ArrayList<>(recipes));
+            rvRecipes.setAdapter(rvAdapter);
+        });
     }
     private void performSearch(String query) {
         if (!query.isEmpty()) {

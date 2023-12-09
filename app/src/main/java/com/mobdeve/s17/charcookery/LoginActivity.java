@@ -53,10 +53,10 @@ public class LoginActivity extends AppCompatActivity {
             signOut();
         });
         // uncomment once done with edit profile
-//        editProfileBtn.setOnClickListener(v -> {
-//            // Call the editProfile method to navigate to the Edit User Profile activity
-//            editProfile();
-//        });
+        editProfileBtn.setOnClickListener(v -> {
+            // Call the editProfile method to navigate to the Edit User Profile activity
+            editProfile();
+        });
 
         login_btn.setOnClickListener(v -> {
             // TODO: check for login credentials
@@ -107,12 +107,12 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish(); // Finish the current activity to prevent going back to the main activity using the back button
     }
-//    private void editProfile() {
-//        // Redirect to the Edit User Profile activity or perform any other necessary actions
-//        //Edit User Profile Activity is not created yet uncomment this when it is created
-//        Intent intent = new Intent(LoginActivity.this, EditUserProfile.class);
-//        startActivity(intent);
-//    }
+    private void editProfile() {
+        // Redirect to the Edit User Profile activity or perform any other necessary actions
+        //Edit User Profile Activity is not created yet uncomment this when it is created
+        Intent intent = new Intent(LoginActivity.this, EditUserProfileActivity.class);
+        startActivity(intent);
+    }
 
     private static void clearUserId(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);

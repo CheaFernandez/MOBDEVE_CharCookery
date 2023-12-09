@@ -22,8 +22,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAdapter.RecipePreviewHolder> {
-    private ArrayList<RecipeItem> recipeItems;
+    private ImageView recipePreviewImg;
+    private TextView recipePreviewTitle;
+
+    private final ArrayList<RecipeItem> recipeItems;
     private static final int MAX_ITEMS = 4;
+
     public static class RecipePreviewHolder extends RecyclerView.ViewHolder {
         public ImageView ivThumbnail;
         public TextView tvTitle;
@@ -49,19 +53,8 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
     public RecipePreviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_recipe, parent, false);
 
-        ImageView recipePreviewImg = v.findViewById(R.id.recipePreviewImg);
-        TextView recipePreviewTitle = v.findViewById(R.id.recipePreviewTitle);
-
-        View.OnClickListener recipePreviewListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RecipeActivity.class);
-                v.getContext().startActivity(intent);
-            }
-        };
-
-        recipePreviewImg.setOnClickListener(recipePreviewListener);
-        recipePreviewTitle.setOnClickListener(recipePreviewListener);
+        recipePreviewImg = v.findViewById(R.id.recipePreviewImg);
+        recipePreviewTitle = v.findViewById(R.id.recipePreviewTitle);
 
         return new RecipePreviewHolder(v);
     }
@@ -70,15 +63,22 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
     public void onBindViewHolder(@NonNull RecipePreviewHolder holder, int position) {
         RecipeItem currentItem = recipeItems.get(position);
 
-        if (currentItem == null) {
-            return;
-        }
+        if (currentItem == null) return;
 
         Context context = holder.itemView.getContext();
 
         Picasso.get().load(currentItem.getCoverImage()).into(holder.ivThumbnail);
         holder.tvTitle.setText(currentItem.getTitle());
         holder.tvCategory.setText(currentItem.getCategory());
+
+        View.OnClickListener recipePreviewListener = v -> {
+            Intent intent = new Intent(v.getContext(), RecipeActivity.class);
+            intent.putExtra("recipe", currentItem);
+            v.getContext().startActivity(intent);
+        };
+
+        recipePreviewImg.setOnClickListener(recipePreviewListener);
+        recipePreviewTitle.setOnClickListener(recipePreviewListener);
 
 
         Drawable dwHeartFilled = ContextCompat.getDrawable(context, R.drawable.heart_filled);
@@ -90,16 +90,13 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
             holder.btnFavorite.setForeground(dwHeartOutline);
         }
 
-        holder.btnFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentItem.toggleFavorite();
+        holder.btnFavorite.setOnClickListener(v -> {
+            currentItem.toggleFavorite();
 
-                if (currentItem.checkFavorite()) {
-                    holder.btnFavorite.setForeground(dwHeartFilled);
-                } else {
-                    holder.btnFavorite.setForeground(dwHeartOutline);
-                }
+            if (currentItem.checkFavorite()) {
+                holder.btnFavorite.setForeground(dwHeartFilled);
+            } else {
+                holder.btnFavorite.setForeground(dwHeartOutline);
             }
         });
     }

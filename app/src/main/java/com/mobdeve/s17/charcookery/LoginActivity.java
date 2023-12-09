@@ -1,5 +1,6 @@
 package com.mobdeve.s17.charcookery;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
 
     AppCompatButton login_btn;
     AppCompatButton cancel_btn;
+    AppCompatButton logout_btn;
+    AppCompatButton editProfileBtn;
 
     EditText emailEditText;
     EditText passwordEditText;
@@ -28,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     Context context;
 
     private APIInterface apiInterface;
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -40,6 +44,19 @@ public class LoginActivity extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
         context = this;
+
+        logout_btn = findViewById(R.id.sign_out);
+        editProfileBtn = findViewById(R.id.edit_profile);
+
+        logout_btn.setOnClickListener(v -> {
+            // Call the signOut method to log out the user
+            signOut();
+        });
+        // uncomment once done with edit profile
+//        editProfileBtn.setOnClickListener(v -> {
+//            // Call the editProfile method to navigate to the Edit User Profile activity
+//            editProfile();
+//        });
 
         login_btn.setOnClickListener(v -> {
             // TODO: check for login credentials
@@ -81,7 +98,28 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
     }
+    private void signOut() {
+        // Clear the stored user ID from SharedPreferences
+        clearUserId(context);
 
+        // Redirect to the login page or perform any other necessary actions
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish(); // Finish the current activity to prevent going back to the main activity using the back button
+    }
+//    private void editProfile() {
+//        // Redirect to the Edit User Profile activity or perform any other necessary actions
+//        //Edit User Profile Activity is not created yet uncomment this when it is created
+//        Intent intent = new Intent(LoginActivity.this, EditUserProfile.class);
+//        startActivity(intent);
+//    }
+
+    private static void clearUserId(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Constants.SP_USER_ID);
+        editor.apply();
+    }
     private static void saveUserId(Context context, String userId) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

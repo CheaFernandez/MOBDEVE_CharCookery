@@ -90,6 +90,7 @@
             android:paddingBottom="8dp"
             android:text="Sign Out"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:OnClickListener="sign_out"
             android:textSize="12sp"
             tools:ignore="VisualLintButtonSize" />
 
@@ -106,6 +107,7 @@
             android:paddingBottom="8dp"
             android:text="Edit Profile"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:OnClickListener="edit_profile"
             android:textSize="12sp"
             tools:ignore="VisualLintButtonSize" />
     </LinearLayout>

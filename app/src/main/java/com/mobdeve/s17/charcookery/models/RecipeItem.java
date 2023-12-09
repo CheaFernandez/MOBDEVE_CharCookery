@@ -162,4 +162,7 @@ public class RecipeItem implements Serializable {
             return null;
         }
     }
+
+    public void setNotes(String editedNotes) {
+    }
 }

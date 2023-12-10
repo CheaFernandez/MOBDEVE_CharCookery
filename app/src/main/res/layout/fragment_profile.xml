@@ -85,12 +85,11 @@
             android:layout_weight="1"
             android:background="@drawable/grey_rounded"
             android:minHeight="0dp"
-            android:onClick="cancel_add"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:text="Sign Out"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:OnClickListener="sign_out"
+            android:onClick="sign_out"
             android:textSize="12sp"
             tools:ignore="VisualLintButtonSize" />
 
@@ -102,12 +101,11 @@
             android:layout_weight="1"
             android:background="@drawable/grey_rounded"
             android:minHeight="0dp"
-            android:onClick="add_category"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:text="Edit Profile"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:OnClickListener="edit_profile"
+            android:onClick="edit_profile"
             android:textSize="12sp"
             tools:ignore="VisualLintButtonSize" />
     </LinearLayout>

@@ -18,6 +18,7 @@ import com.mobdeve.s17.charcookery.models.RecipeItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CollectionRecipesAdapter extends RecyclerView.Adapter<CollectionRecipesAdapter.CollectionViewHolder> {
     private ArrayList<RecipeItem> recipeItems;
@@ -77,6 +78,12 @@ public class CollectionRecipesAdapter extends RecyclerView.Adapter<CollectionRec
                 }
             }
         });
+    }
+
+    public void updateData(List<RecipeItem> newRecipeItems) {
+        this.recipeItems.clear();
+        this.recipeItems.addAll(newRecipeItems);
+        notifyDataSetChanged();
     }
 
     @Override

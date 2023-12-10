@@ -23,16 +23,13 @@ import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.models.Mocker;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
-import com.mobdeve.s17.charcookery.api.APIClient;
-import com.mobdeve.s17.charcookery.api.APIInterface;
-import com.mobdeve.s17.charcookery.api.models.AccessTokenResponse;
-import com.mobdeve.s17.charcookery.api.models.CreateAccountBody;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.Callback;
 
 public class RecipesFragment extends Fragment {
     private RecyclerView rvRecipes;
@@ -92,15 +89,21 @@ public class RecipesFragment extends Fragment {
     }
 
     private void fetchRecipesFromApi(String query) {
+        // Get user id
+        SharedPreferences prefs = getContext().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        String userId = prefs.getString(Constants.SP_USER_ID, null);
+        // Create an instance of APIInterface
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+
         // For now, let's log the query and fetch mock data
         System.out.println("Search Query: " + query);
 
         // Assuming you have an APIInterface with a method for searching recipes
         Call<List<RecipeItem>> call = apiInterface.getRecipesForUserWithFilters(
-                userId, // Replace with the actual user ID
+                userId,
                 query,
-                null, // Set category to null, or provide a category if needed
-                false, // Assuming isFavorite is false, update as needed
+                null,
+                false,
                 0
         );
         call.enqueue(new Callback<List<RecipeItem>>() {
@@ -124,7 +127,7 @@ public class RecipesFragment extends Fragment {
     }
 
     private void updateRecipesBasedOnSearch(List<RecipeItem> searchedRecipes) {
-        // Replace this with your actual implementation to update the RecyclerView
+        // Replace this with actual implementation to update the RecyclerView
         // with the searched recipes
         // For now, let's log the recipes
         System.out.println("Searched Recipes: " + searchedRecipes);

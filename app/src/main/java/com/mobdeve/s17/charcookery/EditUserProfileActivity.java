@@ -1,7 +1,9 @@
 package com.mobdeve.s17.charcookery;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,6 +21,7 @@ import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.api.models.AccessTokenResponse;
 import com.mobdeve.s17.charcookery.api.models.CreateAccountBody;
+import com.mobdeve.s17.charcookery.models.UserProfileUpdateRequest;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -69,7 +72,13 @@ public class EditUserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Save changes (you need to implement this)
-                updateUserProfile();
+                // Get the updated name, photo URL, and dietary restrictions
+                String newName = editNameEditText.getText().toString();
+                String newPhotoUrl = ""; // Add your logic to get the updated photo URL
+                String newDietaryRestrictions = ""; // Add your logic to get the updated dietary restrictions
+
+                // Call the appropriate updateUserProfile method with the gathered information
+                updateUserProfile(newName, newPhotoUrl, newDietaryRestrictions);
 
                 // Show a toast message indicating that changes are saved
                 Toast.makeText(EditUserProfileActivity.this, "Changes saved", Toast.LENGTH_SHORT).show();
@@ -156,19 +165,16 @@ public class EditUserProfileActivity extends AppCompatActivity {
     }
 
     private void updateUserProfile(String newName, String newPhotoUrl, String newDietaryRestrictions) {
-        // You need to get the user ID from SharedPreferences or wherever it's stored
+        // Get the user ID from SharedPreferences or wherever it's stored
         String userId = getUserId();
 
         // Gather the updated information from your UI components
-        String newName = editNameEditText.getText().toString();
-        String newPhotoUrl = ""; // Add your logic to get the updated photo URL
-        String newDietaryRestrictions = ""; // Add your logic to get the updated dietary restrictions
+        String updatedName = editNameEditText.getText().toString();
+        String updatedPhotoUrl = ""; // Add your logic to get the updated photo URL
+        String updatedDietaryRestrictions = ""; // Add your logic to get the updated dietary restrictions
 
         // Create a UserProfileUpdateRequest with the updated information
-        UserProfileUpdateRequest updateRequest = new UserProfileUpdateRequest();
-        updateRequest.setName(newName);
-        updateRequest.setPhoto_url(newPhotoUrl);
-        updateRequest.setDietary_restrictions(newDietaryRestrictions);
+        UserProfileUpdateRequest updateRequest = new UserProfileUpdateRequest(updatedName, updatedPhotoUrl, updatedDietaryRestrictions);
 
         // Make the API call to update the user's profile
         Call<AccessTokenResponse> call = apiInterface.updateProfile(userId, updateRequest);
@@ -195,6 +201,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
 
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -214,6 +222,11 @@ public class EditUserProfileActivity extends AppCompatActivity {
     public void onBackPressed() {
         // Additional logic can be added here before finishing the activity
         super.onBackPressed();
+    }
+
+    private String getUserId() {
+        SharedPreferences prefs = getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        return prefs.getString(Constants.SP_USER_ID, null);
     }
 
 

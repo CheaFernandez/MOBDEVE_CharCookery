@@ -9,6 +9,7 @@
     <string name="title_activity_basis">basis</string>
     <string name="your_prompt_here"> </string>
     <string name="ingredients_txt">Ingredients</string>
+    <string name="enter_notes">%s </string>
 
     <string name="duration_format">%d mins</string>
 

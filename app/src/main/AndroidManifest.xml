@@ -38,7 +38,7 @@
             android:exported="false" />
         <activity
             android:name=".RecipeActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".AddCategory"
             android:exported="false" />

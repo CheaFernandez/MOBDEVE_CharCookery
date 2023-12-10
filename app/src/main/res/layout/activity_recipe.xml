@@ -144,34 +144,22 @@
     </com.google.android.material.tabs.TabLayout>
 
     <!-- ViewPager to switch between fragments -->
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnEditNotes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:onClick="showEditNotesDialog"
-            app:srcCompat="@drawable/icon_write" />
-    </androidx.viewpager.widget.ViewPager>
-
-    <TextView
-        android:id="@+id/tvNotes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Original Notes"
-        android:layout_marginTop="16dp"/>
+        android:layout_weight="1"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/cookingModeButton"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_margin="8dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/primary_tag"
         android:scaleType="fitCenter"
-        android:src="@drawable/start_cm_btn_txt" />
+        android:src="@drawable/start_cm_btn_txt"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 </LinearLayout>

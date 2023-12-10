@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -23,8 +24,7 @@ public class RecipeActivity extends BaseRecipeActivity {
 
     ImageButton cookingModeButton;
     RecipeItem recipe;
-    ImageButton btnEditNotes;
-    TextView tvNotes;
+    AppCompatButton btnEditNotes;
 
 
     @Override
@@ -42,14 +42,6 @@ public class RecipeActivity extends BaseRecipeActivity {
         setupTabs();
 
         btnEditNotes = findViewById(R.id.btnEditNotes);
-        tvNotes = findViewById(R.id.tvNotes);
-
-        btnEditNotes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEditNotesDialog();
-            }
-        });
     }
 
     private void fetchRecipeFromIntent() {
@@ -91,8 +83,8 @@ public class RecipeActivity extends BaseRecipeActivity {
         Intent intent = new Intent(RecipeActivity.this, CookingModeActivity.class);
         startActivity(intent);
     }
-    private void showEditNotesDialog() {
-        // Create an AlertDialog with an EditText for editing notes
+    public void showEditNotesDialog() {
+        // Create an AlertDialog with a custom layout for editing notes
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Notes");
 
@@ -123,7 +115,7 @@ public class RecipeActivity extends BaseRecipeActivity {
     private void updateNotes(String editedNotes) {
         // Update the RecipeItem object and UI with the edited notes
         recipe.setNotes(editedNotes);
-        tvNotes.setText(editedNotes);
+        btnEditNotes.setText(editedNotes);
     }
 }
 

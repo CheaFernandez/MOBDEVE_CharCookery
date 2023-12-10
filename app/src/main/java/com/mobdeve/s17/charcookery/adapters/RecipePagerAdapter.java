@@ -1,12 +1,14 @@
 package com.mobdeve.s17.charcookery.adapters;
 
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.mobdeve.s17.charcookery.fragments.TextListFragment;
-import com.mobdeve.s17.charcookery.NotesFragment;
+import com.mobdeve.s17.charcookery.fragments.NotesFragment;
 
 public class RecipePagerAdapter extends FragmentPagerAdapter {
 
@@ -29,7 +31,12 @@ public class RecipePagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0: return new TextListFragment(ingredients);
             case 1: return new TextListFragment(instructions, true);
-            case 2: return new NotesFragment();
+            case 2:
+                NotesFragment notesFragment = new NotesFragment();
+                Bundle args = new Bundle();
+                args.putString("notes", notes);
+                notesFragment.setArguments(args);
+                return notesFragment;
             default: return new Fragment();
         }
     }

@@ -22,8 +22,6 @@ public class LoginActivity extends AppCompatActivity {
 
     AppCompatButton login_btn;
     AppCompatButton cancel_btn;
-    AppCompatButton logout_btn;
-    AppCompatButton editProfileBtn;
 
     EditText emailEditText;
     EditText passwordEditText;
@@ -45,17 +43,9 @@ public class LoginActivity extends AppCompatActivity {
         apiInterface = APIClient.getClient().create(APIInterface.class);
         context = this;
 
-        logout_btn = findViewById(R.id.sign_out);
-        editProfileBtn = findViewById(R.id.edit_profile);
-
-        logout_btn.setOnClickListener(v -> {
+        cancel_btn.setOnClickListener(v -> {
             // Call the signOut method to log out the user
             signOut();
-        });
-        // uncomment once done with edit profile
-        editProfileBtn.setOnClickListener(v -> {
-            // Call the editProfile method to navigate to the Edit User Profile activity
-            editProfile();
         });
 
         login_btn.setOnClickListener(v -> {
@@ -106,12 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish(); // Finish the current activity to prevent going back to the main activity using the back button
-    }
-    private void editProfile() {
-        // Redirect to the Edit User Profile activity or perform any other necessary actions
-        //Edit User Profile Activity is not created yet uncomment this when it is created
-        Intent intent = new Intent(LoginActivity.this, EditUserProfileActivity.class);
-        startActivity(intent);
     }
 
     private static void clearUserId(Context context) {

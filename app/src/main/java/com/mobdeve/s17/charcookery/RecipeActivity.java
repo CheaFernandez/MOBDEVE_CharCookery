@@ -24,7 +24,6 @@ public class RecipeActivity extends BaseRecipeActivity {
 
     ImageButton cookingModeButton;
     RecipeItem recipe;
-    AppCompatButton btnEditNotes;
 
 
     @Override
@@ -40,8 +39,6 @@ public class RecipeActivity extends BaseRecipeActivity {
         fetchRecipeFromIntent();
         inflatePageWithRecipe();
         setupTabs();
-
-        btnEditNotes = findViewById(R.id.btnEditNotes);
     }
 
     private void fetchRecipeFromIntent() {
@@ -83,25 +80,28 @@ public class RecipeActivity extends BaseRecipeActivity {
         Intent intent = new Intent(RecipeActivity.this, CookingModeActivity.class);
         startActivity(intent);
     }
-    public void showEditNotesDialog() {
-        // Create an AlertDialog with a custom layout for editing notes
+    public void showEditNotesDialog(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Edit Notes");
 
+        // Inflate the dialog layout
         View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_edit_notes, null);
+
+        // Find the EditText within the AlertDialog view
         final EditText input = viewInflated.findViewById(R.id.etEditNotes);
         input.setText(recipe.getNotes());
-
-        builder.setView(viewInflated);
 
         // Set up the buttons
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                // Handle the OK button click, if needed
                 String editedNotes = input.getText().toString();
                 updateNotes(editedNotes);
+                dialog.dismiss();
             }
         });
+
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -109,13 +109,25 @@ public class RecipeActivity extends BaseRecipeActivity {
             }
         });
 
-        builder.show();
+        // Set the inflated view to the builder
+        builder.setView(viewInflated);
+
+        // Create the AlertDialog
+        AlertDialog alertDialog = builder.create();
+
+        // Show the AlertDialog
+        alertDialog.show();
     }
 
     private void updateNotes(String editedNotes) {
         // Update the RecipeItem object and UI with the edited notes
         recipe.setNotes(editedNotes);
-        btnEditNotes.setText(editedNotes);
+        // Update the displayed notes in the notes tab
+        TextView notes_text = findViewById(R.id.notes_text);
+        notes_text.setText(editedNotes);
+        // TODO: Update the notes in the database
+
+        
     }
 }
 

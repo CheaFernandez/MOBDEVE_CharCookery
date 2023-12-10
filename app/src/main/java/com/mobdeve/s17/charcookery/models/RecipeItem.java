@@ -164,5 +164,8 @@ public class RecipeItem implements Serializable {
     }
 
     public void setNotes(String editedNotes) {
+        this.notes = editedNotes;
+        // Update the displayed notes in the notes tab
+
     }
 }

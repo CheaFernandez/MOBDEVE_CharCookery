@@ -5,6 +5,7 @@ import com.mobdeve.s17.charcookery.api.models.CreateAccountBody;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -52,6 +53,12 @@ public interface APIInterface {
     Call<AccessTokenResponse> updateProfile(
             @Path("userId") String userId,
             @Body CreateAccountBody UserProfileUpdateRequest
+    );
+
+    @PUT("/api/recipes/{recipeId}/notes")
+    Call<Void> updateRecipeNotes(
+            @Path("recipeId") String recipeId,
+            @Body Map<String, String> notes
     );
 }
 

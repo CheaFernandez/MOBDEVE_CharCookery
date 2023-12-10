@@ -9,16 +9,26 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.mobdeve.s17.charcookery.adapters.RecipePagerAdapter;
+import com.mobdeve.s17.charcookery.api.APICaller;
+import com.mobdeve.s17.charcookery.api.APIClient;
+import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.components.BaseRecipeActivity;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecipeActivity extends BaseRecipeActivity {
 
@@ -125,9 +135,30 @@ public class RecipeActivity extends BaseRecipeActivity {
         // Update the displayed notes in the notes tab
         TextView notes_text = findViewById(R.id.notes_text);
         notes_text.setText(editedNotes);
-        // TODO: Update the notes in the database
 
-        
+        // Call the API to update notes
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        Map<String, String> notesMap = new HashMap<>();
+        notesMap.put("notes", editedNotes);
+
+        Call<Void> call = apiInterface.updateRecipeNotes(recipe.getId(), notesMap);
+
+        APICaller.enqueue(call, new APICaller.APICallback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                Toast.makeText(RecipeActivity.this, "Notes updated", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                // Handle failure
+                // You may want to revert the UI changes if the update fails
+                t.printStackTrace();
+            }
+        });
     }
+
+
 }
 

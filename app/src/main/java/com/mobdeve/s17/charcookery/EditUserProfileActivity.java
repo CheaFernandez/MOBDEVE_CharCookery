@@ -11,8 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -43,8 +43,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private static final int IMAGE_CAPTURE_REQ = 1003;
     private ImageView profileImageView;
     private AppCompatButton btnUploadProfilePic;
+    private Button btnBack;
     private EditText usernameEditTextView;
-    private ImageButton btnEditUsername;
     private EditText editTextDiet;
     private AppCompatButton btnConfirmChanges;
     private AppCompatButton btnDiscardChanges;
@@ -57,12 +57,12 @@ public class EditUserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editprofile);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
+        btnBack = findViewById(R.id.btnBack);
 
         profileImageView = findViewById(R.id.profile_pic);
         btnUploadProfilePic = findViewById(R.id.btnUploadProfilePic);
 
         usernameEditTextView = findViewById(R.id.usernameEditTextView);
-        btnEditUsername = findViewById(R.id.btnEditUsername);
 
         editTextDiet = findViewById(R.id.editTextDiet);
 
@@ -73,13 +73,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showImageSourceDialog();
-            }
-        });
-
-        btnEditUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEditUsernameDialog();
             }
         });
 
@@ -96,6 +89,14 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 discardChanges();
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     private void showImageSourceDialog() {
@@ -208,7 +209,12 @@ public class EditUserProfileActivity extends AppCompatActivity {
     }
 
     private void discardChanges() {
+        // Reset the UI components to their original values
+        usernameEditTextView.setText("Username");
+        profileImageView.setImageResource(R.drawable.user_outline);
+        editTextDiet.setText("Dietary Restrictions");
         Toast.makeText(this, "Changes discarded", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     @Override

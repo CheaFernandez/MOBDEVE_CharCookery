@@ -8,35 +8,61 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="718dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:backgroundTint="@color/white"
+            android:foreground="@drawable/arrow_left"
+            android:foregroundGravity="center|fill"
+            android:minWidth="0dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:src="@drawable/charcookery_logo" />
+
+        <Space
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/charcookery_logo" />
-
-        <ImageView
             android:id="@+id/profile_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            tools:srcCompat="@drawable/user_filled" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnUploadProfilePic"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="6dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/primary_rounded"
             android:minHeight="0dp"
             android:onClick="add_category"
@@ -60,21 +86,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="50dp"
                 android:fontFamily="@font/inter_bold"
                 android:gravity="center"
                 android:text="Username"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/btnEditUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginStart="10dp"
-                app:srcCompat="@drawable/icon_write" />
 
         </LinearLayout>
 
@@ -117,7 +134,7 @@
             android:layout_height="39dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="266dp"
+            android:layout_marginBottom="230dp"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
@@ -152,7 +169,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <include layout="@layout/layout_menu" />
 
 </LinearLayout>

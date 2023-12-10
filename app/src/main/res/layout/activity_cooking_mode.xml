@@ -18,7 +18,7 @@
         android:paddingBottom="10dp">
 
         <Button
-            android:id="@+id/recipeBackBtn"
+            android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginBottom="2dp"

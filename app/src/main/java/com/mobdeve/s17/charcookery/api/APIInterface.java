@@ -11,6 +11,7 @@ import com.mobdeve.s17.charcookery.models.Category;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -27,6 +28,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface APIInterface {
 
@@ -99,11 +101,17 @@ public interface APIInterface {
 
     @GET("/api/recipes/{userId}")
     Call<List<RecipeItem>> getRecipesForUserWithFilters(
-            @Path("userid") String userId,
+            @Path("userId") String userId,
             @Query("q") String q,
             @Query("category") String category,
             @Query("is_favorite") boolean isFavorite,
             @Query("max_time") int maxTime
+    );
+
+    @GET("/api/recipes/{userId}")
+    Call<List<RecipeItem>> getRecipesForUserWithFilters(
+            @Path("userId") String userId,
+            @QueryMap Map<String, Object> queryParameters
     );
 
 

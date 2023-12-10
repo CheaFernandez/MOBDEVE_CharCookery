@@ -106,7 +106,7 @@ public class RecipeItem implements Serializable {
     }
 
     public Boolean checkFavorite() {
-        return isFavorite;
+        return this.isFavorite;
     }
 
     public void toggleFavorite() {
@@ -167,5 +167,9 @@ public class RecipeItem implements Serializable {
         this.notes = editedNotes;
         // Update the displayed notes in the notes tab
 
+    }
+
+    public void setFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }

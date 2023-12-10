@@ -39,5 +39,7 @@
         <item>Step 7|Stir in basil. Cook and stir until basil is wilted, about 20 seconds. Serve with rice.</item>
         <item>Step 8|Serve hot and enjoy!</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

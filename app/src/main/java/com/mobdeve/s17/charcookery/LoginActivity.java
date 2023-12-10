@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         login_btn = findViewById(R.id.register_btn);
         cancel_btn = findViewById(R.id.cancel_btn);
 
-        emailEditText = findViewById(R.id.loginEmailEt);
+        emailEditText = findViewById(R.id.usernameEditTextView);
         passwordEditText = findViewById(R.id.loginPasswordEt);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);

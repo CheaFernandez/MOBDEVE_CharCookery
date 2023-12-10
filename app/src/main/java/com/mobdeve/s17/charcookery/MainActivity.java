@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private Fragment favoritesFragment;
     private Fragment userProfileFragment;
 
+    private Fragment editUserProfileFragment;
+
     private MenuManager menuManager;
     private FragmentManager fragmentManager;
 

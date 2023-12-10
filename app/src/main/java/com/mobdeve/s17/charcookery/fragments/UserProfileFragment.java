@@ -14,7 +14,6 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.mobdeve.s17.charcookery.EditUserProfileActivity;
 import com.mobdeve.s17.charcookery.HomeActivity;
-import com.mobdeve.s17.charcookery.MainActivity;
 import com.mobdeve.s17.charcookery.R;
 
 public class UserProfileFragment extends Fragment {

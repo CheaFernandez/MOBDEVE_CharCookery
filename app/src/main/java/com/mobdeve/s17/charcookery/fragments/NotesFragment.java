@@ -19,14 +19,6 @@ public class NotesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static NotesFragment newInstance(String notes) {
-        NotesFragment fragment = new NotesFragment();
-        Bundle args = new Bundle();
-        args.putString("notes", notes);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,27 +1,36 @@
 package com.mobdeve.s17.charcookery;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import com.mobdeve.s17.charcookery.api.models.AccessTokenResponse;
+import com.mobdeve.s17.charcookery.models.UserProfileUpdateRequest;
 import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
-import com.mobdeve.s17.charcookery.api.models.AccessTokenResponse;
-import com.mobdeve.s17.charcookery.api.models.CreateAccountBody;
-import com.mobdeve.s17.charcookery.models.UserProfileUpdateRequest;
+import com.mobdeve.s17.charcookery.Constants;
+
+import java.io.ByteArrayOutputStream;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,129 +38,129 @@ import retrofit2.Response;
 
 public class EditUserProfileActivity extends AppCompatActivity {
 
-    private EditText editNameEditText;
-    private EditText editTextDiet;
+    private final int GALLERY_REQ_CODE = 1000;
+    private static final int CAMERA_REQ_CODE = 1002;
+    private static final int IMAGE_CAPTURE_REQ = 1003;
     private ImageView profileImageView;
-
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int GALLERY_REQUEST_CODE = 2;
-
+    private AppCompatButton btnUploadProfilePic;
+    private EditText usernameEditTextView;
+    private ImageButton btnEditUsername;
+    private EditText editTextDiet;
+    private AppCompatButton btnConfirmChanges;
+    private AppCompatButton btnDiscardChanges;
     private APIInterface apiInterface;
-    private CreateAccountBody updateUserProfileRequest;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_profile);
+        setContentView(R.layout.activity_editprofile);
 
-        editNameEditText = findViewById(R.id.loginEmailEt);
-        editTextDiet = findViewById(R.id.editTextDiet);
-        profileImageView = findViewById(R.id.profile_pic);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        editTextDiet.setOnClickListener(new View.OnClickListener() {
+        profileImageView = findViewById(R.id.profile_pic);
+        btnUploadProfilePic = findViewById(R.id.btnUploadProfilePic);
+
+        usernameEditTextView = findViewById(R.id.usernameEditTextView);
+        btnEditUsername = findViewById(R.id.btnEditUsername);
+
+        editTextDiet = findViewById(R.id.editTextDiet);
+
+        btnConfirmChanges = findViewById(R.id.btnConfirmChanges);
+        btnDiscardChanges = findViewById(R.id.btnDiscardChanges);
+
+        btnUploadProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the click on editTextDiet
-                openImagePicker();
+                showImageSourceDialog();
             }
         });
 
-        editNameEditText.setOnClickListener(new View.OnClickListener() {
+        btnEditUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the click on editNameEditText
-                editName();
+                showEditUsernameDialog();
             }
         });
 
-        Button confirmBtn = findViewById(R.id.Confirm);
-        Button discardBtn = findViewById(R.id.Discard);
-
-        confirmBtn.setOnClickListener(new View.OnClickListener() {
+        btnConfirmChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Save changes (you need to implement this)
-                // Get the updated name, photo URL, and dietary restrictions
-                String newName = editNameEditText.getText().toString();
-                String newPhotoUrl = ""; // Add your logic to get the updated photo URL
-                String newDietaryRestrictions = ""; // Add your logic to get the updated dietary restrictions
-
-                // Call the appropriate updateUserProfile method with the gathered information
-                updateUserProfile(newName, newPhotoUrl, newDietaryRestrictions);
-
-                // Show a toast message indicating that changes are saved
-                Toast.makeText(EditUserProfileActivity.this, "Changes saved", Toast.LENGTH_SHORT).show();
-
-                // Navigate back to UserProfileActivity
-                onBackPressed();
+                saveChanges();
             }
         });
 
-        discardBtn.setOnClickListener(new View.OnClickListener() {
+        btnDiscardChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Discard changes and navigate back to UserProfileActivity
-                onBackPressed();
+                discardChanges();
             }
         });
     }
 
-    private void openImagePicker() {
+    private void showImageSourceDialog() {
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choose Image Source");
-
-        CharSequence[] options = {"Take Photo", "Choose from Gallery"};
-
+        builder.setTitle("Choose an option");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        // Take Photo
-                        openCamera();
-                        break;
-                    case 1:
-                        // Choose from Gallery
-                        openGallery();
-                        break;
+            public void onClick(DialogInterface dialog, int item) {
+                if (item == 0) {
+                    requestCameraPermission();
+                } else if (item == 1) {
+                    openGallery();
+                } else if (item == 2) {
+                    dialog.dismiss();
                 }
             }
         });
-
         builder.show();
     }
 
-    private void openCamera() {
-        // Intent to open the camera for capturing an image
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE);
+    private void requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    CAMERA_REQ_CODE);
+        } else {
+            openCamera();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_REQ_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCamera();
+            } else {
+                Toast.makeText(this, "Camera permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void openGallery() {
-        // Intent to open the gallery for selecting an image
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
+        startActivityForResult(galleryIntent, GALLERY_REQ_CODE);
     }
 
-    private void editName() {
+    private void openCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQ);
+    }
+
+    private void showEditUsernameDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Edit Name");
-
-        // Set up the input
+        builder.setTitle("Edit Username");
         final EditText input = new EditText(this);
-        input.setText(editNameEditText.getText().toString()); // Set the current name as the default text
         builder.setView(input);
-
-        // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String newName = input.getText().toString();
-                editNameEditText.setText(newName);
-
-                // Now, you can make the API call to update the user's name
-                updateUserProfile(newName, null, null);
+                String newUsername = input.getText().toString();
+                usernameEditTextView.setText(newUsername);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -160,18 +169,17 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
-
         builder.show();
     }
 
-    private void updateUserProfile(String newName, String newPhotoUrl, String newDietaryRestrictions) {
+    private void saveChanges() {
         // Get the user ID from SharedPreferences or wherever it's stored
         String userId = getUserId();
 
         // Gather the updated information from your UI components
-        String updatedName = editNameEditText.getText().toString();
-        String updatedPhotoUrl = ""; // Add your logic to get the updated photo URL
-        String updatedDietaryRestrictions = ""; // Add your logic to get the updated dietary restrictions
+        String updatedName = usernameEditTextView.getText().toString();
+        String updatedPhotoUrl = imageUri.toString();
+        String updatedDietaryRestrictions = editTextDiet.getText().toString();
 
         // Create a UserProfileUpdateRequest with the updated information
         UserProfileUpdateRequest updateRequest = new UserProfileUpdateRequest(updatedName, updatedPhotoUrl, updatedDietaryRestrictions);
@@ -199,29 +207,47 @@ public class EditUserProfileActivity extends AppCompatActivity {
         });
     }
 
-
-
-
+    private void discardChanges() {
+        Toast.makeText(this, "Changes discarded", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == GALLERY_REQUEST_CODE) {
-                // Handle the result from the gallery
-                Uri selectedImageUri = data.getData();
-                // Update the profile picture ImageView with the selected image
-                profileImageView.setImageURI(selectedImageUri);
-            }
+        if (requestCode == GALLERY_REQ_CODE && resultCode == RESULT_OK && data != null) {
+            // Handle gallery result
+            handleGalleryResult(data);
+        } else if (requestCode == IMAGE_CAPTURE_REQ && resultCode == RESULT_OK && data != null) {
+            // Handle camera result
+            handleCameraResult(data);
         }
     }
 
-    // Override onBackPressed to handle the back button
-    @Override
-    public void onBackPressed() {
-        // Additional logic can be added here before finishing the activity
-        super.onBackPressed();
+    private void handleGalleryResult(Intent data) {
+        imageUri = data.getData();
+        profileImageView.setImageURI(imageUri);
+        profileImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        profileImageView.requestLayout();
+    }
+
+    private void handleCameraResult(Intent data) {
+        Bundle extras = data.getExtras();
+        if (extras != null) {
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            // If you want to convert the Bitmap to a Uri, you can use a helper method
+            imageUri = getImageUri(this, imageBitmap);
+            profileImageView.setImageBitmap(imageBitmap);
+            profileImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            profileImageView.requestLayout();
+        }
+    }
+
+    // Helper method to convert Bitmap to Uri
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
     }
 
     private String getUserId() {
@@ -229,5 +255,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
         return prefs.getString(Constants.SP_USER_ID, null);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

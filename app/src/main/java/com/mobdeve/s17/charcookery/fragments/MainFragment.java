@@ -63,6 +63,14 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Update user recipes
+        inflateUserRecipesCollection();
+    }
+
     /**
      * Gets the recipe item previews for a given list of recipe items
      * @param recipeItems

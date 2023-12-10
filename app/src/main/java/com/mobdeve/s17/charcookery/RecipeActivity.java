@@ -135,8 +135,8 @@ public class RecipeActivity extends BaseRecipeActivity {
         recipe.setNotes(editedNotes);
 
         // Update the displayed notes in the notes tab
-        TextView notes_text = findViewById(R.id.notes_text);
-        notes_text.setText(editedNotes);
+        TextView notesText = findViewById(R.id.notes_text);
+        notesText.setText(editedNotes);
 
         // Create UpdateRecipeNotesBody instance
         UpdateRecipeNotesBody updateRecipeNotesBody = new UpdateRecipeNotesBody(editedNotes);
@@ -145,6 +145,7 @@ public class RecipeActivity extends BaseRecipeActivity {
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<RecipeItem> call = apiInterface.updateRecipeNotes(recipe.getId(), updateRecipeNotesBody);
 
+        // Update the recipe object with the new notes on API success
         APICaller.enqueue(call, new APICaller.APICallback<RecipeItem>() {
             @Override
             public void onSuccess(RecipeItem result) {
@@ -154,11 +155,16 @@ public class RecipeActivity extends BaseRecipeActivity {
 
             @Override
             public void onFailure(Throwable t) {
+                // Revert the local changes if API call fails
                 Toast.makeText(RecipeActivity.this, "Failed to update notes", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
+
+                // Revert the RecipeItem object and UI to the original state
+                notesText.setText(recipe.getNotes());
             }
         });
     }
+
 
 
 

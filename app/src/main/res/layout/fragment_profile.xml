@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/sign_out"
+            android:id="@+id/btnSignOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
@@ -89,12 +89,11 @@
             android:paddingBottom="8dp"
             android:text="Sign Out"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:onClick="sign_out"
             android:textSize="12sp"
             tools:ignore="VisualLintButtonSize" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/edit_profile"
+            android:id="@+id/btnEditProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
@@ -105,7 +104,6 @@
             android:paddingBottom="8dp"
             android:text="Edit Profile"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:onClick="edit_profile"
             android:textSize="12sp"
             tools:ignore="VisualLintButtonSize" />
     </LinearLayout>

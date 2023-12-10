@@ -70,22 +70,22 @@ public interface APIInterface {
     @POST("/api/recipe")
     Call<RecipeItem> createRecipe(@Body RecipeItem recipe);
 
-    @GET("/api/recipes/{recipeId}")
+    @GET("/api/recipe/{recipeId}")
     Call<RecipeItem> getRecipeById(@Path("recipeId") String recipeId);
 
-    @PATCH("/api/recipes/{recipeId}")
+    @PATCH("/api/recipe/{recipeId}")
     Call<RecipeItem> updateRecipeNotes(
             @Path("recipeId") String recipeId,
             @Body UpdateRecipeNotesBody notes
     );
 
-    @PATCH("/api/recipes/{recipeId}")
+    @PATCH("/api/recipe/{recipeId}")
     Call<RecipeItem> updateRecipeFavoriteStatus(
             @Path("recipeId") String recipeId,
             @Body UpdateRecipeFavoriteBody isFavorite
     );
 
-    @DELETE("/api/recipes/{recipeId}")
+    @DELETE("/api/recipe/{recipeId}")
     Call<Void> deleteRecipeById(@Path("recipeId") String recipeId);
 
 

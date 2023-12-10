@@ -19,6 +19,7 @@ import com.mobdeve.s17.charcookery.adapters.RecipePagerAdapter;
 import com.mobdeve.s17.charcookery.api.APICaller;
 import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
+import com.mobdeve.s17.charcookery.api.models.UpdateRecipeNotesBody;
 import com.mobdeve.s17.charcookery.components.BaseRecipeActivity;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 import com.squareup.picasso.Picasso;
@@ -132,32 +133,33 @@ public class RecipeActivity extends BaseRecipeActivity {
     private void updateNotes(String editedNotes) {
         // Update the RecipeItem object and UI with the edited notes
         recipe.setNotes(editedNotes);
+
         // Update the displayed notes in the notes tab
         TextView notes_text = findViewById(R.id.notes_text);
         notes_text.setText(editedNotes);
 
+        // Create UpdateRecipeNotesBody instance
+        UpdateRecipeNotesBody updateRecipeNotesBody = new UpdateRecipeNotesBody(editedNotes);
+
         // Call the API to update notes
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<RecipeItem> call = apiInterface.updateRecipeNotes(recipe.getId(), updateRecipeNotesBody);
 
-        Map<String, String> notesMap = new HashMap<>();
-        notesMap.put("notes", editedNotes);
-
-        Call<Void> call = apiInterface.updateRecipeNotes(recipe.getId(), notesMap);
-
-        APICaller.enqueue(call, new APICaller.APICallback<Void>() {
+        APICaller.enqueue(call, new APICaller.APICallback<RecipeItem>() {
             @Override
-            public void onSuccess(Void result) {
+            public void onSuccess(RecipeItem result) {
+                recipe = result;
                 Toast.makeText(RecipeActivity.this, "Notes updated", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Throwable t) {
-                // Handle failure
-                // You may want to revert the UI changes if the update fails
+                Toast.makeText(RecipeActivity.this, "Failed to update notes", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
     }
+
 
 
 }

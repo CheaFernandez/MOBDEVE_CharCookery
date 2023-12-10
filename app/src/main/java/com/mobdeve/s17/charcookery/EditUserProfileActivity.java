@@ -211,7 +211,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
     private void discardChanges() {
         // Reset the UI components to their original values
         usernameEditTextView.setText("Username");
-        profileImageView.setImageResource(R.drawable.user_outline);
+        profileImageView.setImageResource(R.drawable.user_filled);
         editTextDiet.setText("Dietary Restrictions");
         Toast.makeText(this, "Changes discarded", Toast.LENGTH_SHORT).show();
         finish();

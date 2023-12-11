@@ -9,11 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.R;
+import com.mobdeve.s17.charcookery.models.Category;
 
 import java.util.ArrayList;
 
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder> {
-    private ArrayList<String> categoryNames;
+    private ArrayList<Category> categories;
 
     public static class CategoryListViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitle;
@@ -24,8 +25,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         }
     }
 
-    public CategoryListAdapter(ArrayList<String> categoryNames) {
-        this.categoryNames = categoryNames;
+    public CategoryListAdapter(ArrayList<Category> categories) {
+        this.categories = categories;
     }
 
     @NonNull
@@ -37,12 +38,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CategoryListViewHolder holder, int position) {
-        String currentCategory = categoryNames.get(position);
-        holder.tvTitle.setText(currentCategory);
+        Category currentCategory = categories.get(position);
+        holder.tvTitle.setText(currentCategory.getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return categoryNames.size();
+        return categories.size();
     }
 }

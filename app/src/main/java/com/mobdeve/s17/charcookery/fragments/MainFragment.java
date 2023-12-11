@@ -18,6 +18,7 @@ import com.mobdeve.s17.charcookery.api.APICaller;
 import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.components.RecipeCollectionPreview;
+import com.mobdeve.s17.charcookery.models.Category;
 import com.mobdeve.s17.charcookery.models.Mocker;
 import com.mobdeve.s17.charcookery.models.RecipeCollection;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
@@ -46,11 +47,7 @@ public class MainFragment extends Fragment {
         ((MainActivity) getActivity()).updateMenuBar();
 
         // Setup RecyclerView for Categories
-        RecyclerView rvCategories = view.findViewById(R.id.rvCategories);
-        ArrayList<String> categories = Mocker.generateCategoryNames(5); // TODO: Replace with data from API
-
-        RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder> rvAdapter = new CategoryListAdapter(categories);
-        rvCategories.setAdapter(rvAdapter);
+        inflateCategoryList();
 
         // Setup User Recipes - "My Recipes"
         inflateUserRecipesCollection();
@@ -124,6 +121,24 @@ public class MainFragment extends Fragment {
             // Fill collection preview with data
             collectionCommunityRecipes.setRecipes(previewItems);
             collectionCommunityRecipes.setSeeAllClickListener(v -> ((MainActivity) getActivity()).switchToCollectionView(collection));
+        });
+    }
+
+    private void inflateCategoryList() {
+        RecyclerView rvCategories = view.findViewById(R.id.rvCategories);
+
+        // Get user id
+        SharedPreferences prefs = getContext().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        String userId = prefs.getString(Constants.SP_USER_ID, null);
+
+        // Fetch categories from API
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<List<Category>> call = apiInterface.getCategoriesForUser(userId);
+
+        APICaller.enqueue(call, categories -> {
+            RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder> rvAdapter = new CategoryListAdapter(
+                    new ArrayList<Category>(categories));
+            rvCategories.setAdapter(rvAdapter);
         });
     }
 }

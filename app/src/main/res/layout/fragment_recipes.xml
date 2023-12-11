@@ -26,6 +26,7 @@
             android:paddingEnd="10dp" />
 
 <!--        <ImageButton-->
+<!--            android:id="@+id/filterRecipesBtn"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="match_parent"-->
 <!--            android:src="@drawable/icon_adjustments"-->
@@ -33,13 +34,14 @@
 <!--            android:layout_marginBottom="1.5dp"-->
 <!--            style="@style/TextInput" />-->
 
-<!--        <ImageButton-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:src="@drawable/icon_write"-->
-<!--            android:layout_marginStart="10dp"-->
-<!--            android:layout_marginBottom="1.5dp"-->
-<!--            style="@style/TextInput" />-->
+        <ImageButton
+            android:id="@+id/addRecipeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_write"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="1.5dp"
+            style="@style/TextInput" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnApplyFilters"

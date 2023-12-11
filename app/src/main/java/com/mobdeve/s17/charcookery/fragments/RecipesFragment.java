@@ -1,6 +1,7 @@
 package com.mobdeve.s17.charcookery.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -8,13 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mobdeve.s17.charcookery.AddRecipeActivity;
 import com.mobdeve.s17.charcookery.Constants;
 import com.mobdeve.s17.charcookery.MainActivity;
 import com.mobdeve.s17.charcookery.R;
@@ -39,6 +43,8 @@ public class RecipesFragment extends Fragment {
     private RecyclerView.Adapter rvAdapter;
     private View view;
     private EditText etSearch;
+    private ImageButton addRecipeBtn, filterRecipesBtn;
+
     AppCompatButton btnApplyFilters;
 
 
@@ -80,6 +86,13 @@ public class RecipesFragment extends Fragment {
         return view;
     }
     private void setupView() {
+        addRecipeBtn = view.findViewById(R.id.addRecipeBtn);
+        addRecipeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(view.getContext(), AddRecipeActivity.class);
+            startActivity(intent);
+        });
+
+        // Setup recipes
         rvRecipes = view.findViewById(R.id.rvRecipesGrid);
 
         // Get user id

@@ -99,6 +99,7 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
                 holder.btnFavorite.setForeground(dwHeartOutline);
             }
         });
+        return;
     }
 
     @Override

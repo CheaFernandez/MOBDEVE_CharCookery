@@ -80,14 +80,14 @@ public class AddRecipeActivity extends AppCompatActivity {
         // TODO: Update category spinner
         categorySpinner = findViewById(R.id.spinner_category_field);
 
-        String[] items = {"Breakfast", "Lunch", "Dinner", "Snack", "Dessert"};
+        String[] items = {"Weekly Meal Plans", "Dinner Date Ideas"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter);
 
         // Add intents for the text fields and button for add recipe
         edit_recipe_name_field = findViewById(R.id.edit_recipe_name_field);
-        edit_estimated_time_field = findViewById(R.id.edit_estimated_time_field);
+        edit_estimated_time_field = findViewById(R.id.max_time_editText);
         edit_ingredients_field = findViewById(R.id.edit_ingredients_contains_field);
         edit_instructions_field = findViewById(R.id.edit_instructions_field);
         edit_notes_field = findViewById(R.id.edit_notes_field);

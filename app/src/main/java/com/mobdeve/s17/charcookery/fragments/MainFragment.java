@@ -177,5 +177,7 @@ public class MainFragment extends Fragment {
                 inflateCategoryList();
             });
         });
+
+        // TODO: Remove category in UI
     }
 }

@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +26,9 @@ import com.mobdeve.s17.charcookery.models.Mocker;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -35,13 +38,15 @@ public class RecipesFragment extends Fragment {
     private RecyclerView rvRecipes;
     private RecyclerView.Adapter rvAdapter;
     private View view;
+    private EditText etSearch;
+    AppCompatButton btnApplyFilters;
+
 
     public RecipesFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_recipes, container, false);
 
         // Update menu bar
@@ -49,23 +54,31 @@ public class RecipesFragment extends Fragment {
 
         setupView();
 
-        EditText etSearch = view.findViewById(R.id.etSearch);
-        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        etSearch = view.findViewById(R.id.etSearch);
+//        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+//                        (event != null && event.getAction() == KeyEvent.ACTION_DOWN &&
+//                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+//                    performSearch(etSearch.getText().toString());
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+
+        btnApplyFilters = view.findViewById(R.id.btnApplyFilters);
+        btnApplyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        (event != null && event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    performSearch(etSearch.getText().toString());
-                    return true;
-                }
-                return false;
+            public void onClick(View v) {
+                performSearch(etSearch.getText().toString());
+                updateRecipesBasedOnSearch(etSearch.getText().toString());
             }
         });
 
         return view;
     }
-
     private void setupView() {
         rvRecipes = view.findViewById(R.id.rvRecipesGrid);
 
@@ -84,14 +97,22 @@ public class RecipesFragment extends Fragment {
     }
     private void performSearch(String query) {
         if (!query.isEmpty()) {
-            fetchRecipesFromApi(query);
+            // Prepare filter
+            Map<String, Object> queryMap = new HashMap<>();
+            queryMap.put("category", query);
+
+            fetchRecipesFromApi(query, queryMap);
+        } else {
+            // If query is empty, display all recipes
+            fetchRecipesFromApi(query, null);
         }
     }
 
-    private void fetchRecipesFromApi(String query) {
+    private void fetchRecipesFromApi(String query, Map<String, Object> filters) {
         // Get user id
         SharedPreferences prefs = getContext().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
         String userId = prefs.getString(Constants.SP_USER_ID, null);
+
         // Create an instance of APIInterface
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -99,13 +120,7 @@ public class RecipesFragment extends Fragment {
         System.out.println("Search Query: " + query);
 
         // Assuming you have an APIInterface with a method for searching recipes
-        Call<List<RecipeItem>> call = apiInterface.getRecipesForUserWithFilters(
-                userId,
-                query,
-                null,
-                false,
-                0
-        );
+        Call<List<RecipeItem>> call = apiInterface.getRecipesForUserWithFilters(userId, filters);
         call.enqueue(new Callback<List<RecipeItem>>() {
             @Override
             public void onResponse(Call<List<RecipeItem>> call, Response<List<RecipeItem>> response) {
@@ -116,34 +131,28 @@ public class RecipesFragment extends Fragment {
                     updateRecipesBasedOnSearch(searchedRecipes);
                 } else {
                     // Handle unsuccessful response
+
                 }
             }
 
             @Override
             public void onFailure(Call<List<RecipeItem>> call, Throwable t) {
                 // Handle failure
+
             }
         });
     }
 
     private void updateRecipesBasedOnSearch(List<RecipeItem> searchedRecipes) {
-        // Replace this with actual implementation to update the RecyclerView
-        // with the searched recipes
-        // For now, let's log the recipes
         System.out.println("Searched Recipes: " + searchedRecipes);
-
-        // Assuming you have a method to update the RecyclerView adapter
-        // with the new list of recipes
         ((CollectionRecipesAdapter) rvAdapter).updateData(searchedRecipes);
     }
 
     private void updateRecipesBasedOnSearch(String query) {
-        // Replace this with your actual implementation to update the RecyclerView
         ArrayList<RecipeItem> filteredRecipes = filterRecipes(query);
         ((CollectionRecipesAdapter) rvAdapter).updateData(filteredRecipes);
     }
     private ArrayList<RecipeItem> filterRecipes(String query) {
-        // Replace this with your actual implementation to filter the data source
         return Mocker.generateRecipeItems(3, 10);
     }
 }

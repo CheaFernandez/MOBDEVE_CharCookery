@@ -20,6 +20,7 @@ import com.mobdeve.s17.charcookery.models.RecipeItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAdapter.RecipePreviewHolder> {
     private ImageView recipePreviewImg;
@@ -100,6 +101,12 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
             }
         });
         return;
+    }
+
+    public void setRecipes(List<RecipeItem> newRecipes) {
+        recipeItems.clear();
+        recipeItems.addAll(newRecipes);
+        notifyDataSetChanged();
     }
 
     @Override

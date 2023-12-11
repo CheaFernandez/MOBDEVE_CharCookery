@@ -25,21 +25,36 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/icon_adjustments"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="1.5dp"
-            style="@style/TextInput" />
+<!--        <ImageButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/icon_adjustments"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_marginBottom="1.5dp"-->
+<!--            style="@style/TextInput" />-->
 
-        <ImageButton
+<!--        <ImageButton-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/icon_write"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:layout_marginBottom="1.5dp"-->
+<!--            style="@style/TextInput" />-->
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnApplyFilters"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/icon_write"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="1.5dp"
-            style="@style/TextInput" />
+            android:layout_gravity="center"
+            android:background="@drawable/grey_rounded"
+            android:minHeight="0dp"
+            android:onClick="showEditNotesDialog"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Filter"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="12sp" />
 
     </LinearLayout>
 

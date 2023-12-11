@@ -2,23 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_category_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".AddCategory">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:src="@drawable/charcookery_logo"
-        android:paddingTop="10dp" />
-
-    <LinearLayout
-        android:id="@+id/add_category_layout"
-        android:layout_width="match_parent"
-        android:layout_height="669dp"
-        android:orientation="vertical"
-        android:padding="16dp">
+    android:padding="16dp"
+    android:orientation="vertical">
 
         <TextView
             android:id="@+id/new_category_heading"
@@ -72,7 +60,7 @@
                 tools:ignore="VisualLintButtonSize" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/register_btn"
+                android:id="@+id/add_category_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -87,5 +75,4 @@
                 android:textSize="12sp"
                 tools:ignore="VisualLintButtonSize" />
         </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

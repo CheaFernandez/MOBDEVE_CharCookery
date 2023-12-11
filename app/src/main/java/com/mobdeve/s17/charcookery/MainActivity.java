@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.mobdeve.s17.charcookery.fragments.AddCategoryFragment;
 import com.mobdeve.s17.charcookery.fragments.CollectionFragment;
 import com.mobdeve.s17.charcookery.fragments.FavoritesFragment;
 import com.mobdeve.s17.charcookery.fragments.MainFragment;
@@ -81,9 +82,9 @@ public class MainActivity extends AppCompatActivity {
         setFragment(userProfileFragment);
     }
 
-    public void gotoAddCategoryView(View view) {
-        Intent intent = new Intent(this, AddCategory.class);
-        startActivity(intent);
+    public void switchToAddCategoryView() {
+        Fragment addCategoryFragment = new AddCategoryFragment();
+        setFragment(addCategoryFragment);
     }
 
     public void updateMenuBar() {
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         if (currentFragment != null) {
             switch (currentFragment.getClass().getSimpleName()) {
                 case "MainFragment":        menuManager.setActiveTab(Page.HOME); break;
+                case "AddCategory":
                 case "RecipesFragment":
                 case "CollectionFragment":  menuManager.setActiveTab(Page.RECIPES); break;
                 case "FavoritesFragment":   menuManager.setActiveTab(Page.FAVORITES); break;

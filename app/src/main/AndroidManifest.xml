@@ -37,9 +37,6 @@
             android:name=".RecipeActivity"
             android:exported="false"/>
         <activity
-            android:name=".AddCategory"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity

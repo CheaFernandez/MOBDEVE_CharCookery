@@ -19,7 +19,6 @@ import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.components.RecipeCollectionPreview;
 import com.mobdeve.s17.charcookery.models.Category;
-import com.mobdeve.s17.charcookery.models.Mocker;
 import com.mobdeve.s17.charcookery.models.RecipeCollection;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 
@@ -57,6 +56,9 @@ public class MainFragment extends Fragment {
         inflateCommunityRecipeCollection(R.id.collectionCustom1, "Weekly Meal Plans");
         inflateCommunityRecipeCollection(R.id.collectionCustom2, "Dinner Date Ideas");
 
+        // Setup category add button
+        view.findViewById(R.id.addCategoryLayout).setOnClickListener(v -> ((MainActivity) getActivity()).switchToAddCategoryView());
+
         return view;
     }
 
@@ -65,6 +67,7 @@ public class MainFragment extends Fragment {
         super.onResume();
 
         // Update user recipes
+        inflateCategoryList();
         inflateUserRecipesCollection();
     }
 
@@ -137,7 +140,7 @@ public class MainFragment extends Fragment {
 
         APICaller.enqueue(call, categories -> {
             RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder> rvAdapter = new CategoryListAdapter(
-                    new ArrayList<Category>(categories));
+                    new ArrayList<>(categories));
             rvCategories.setAdapter(rvAdapter);
         });
     }

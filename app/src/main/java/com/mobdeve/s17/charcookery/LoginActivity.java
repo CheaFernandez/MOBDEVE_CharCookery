@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -26,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailEditText;
     EditText passwordEditText;
 
+    TextView tvError;
+
     Context context;
 
     private APIInterface apiInterface;
@@ -39,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
         emailEditText = findViewById(R.id.usernameEditTextView);
         passwordEditText = findViewById(R.id.loginPasswordEt);
+        tvError = findViewById(R.id.tvError);
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
         context = this;
@@ -63,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<AccessTokenResponse> call, Response<AccessTokenResponse> response) {
                     if (response.isSuccessful()) {
+                        tvError.setText("");
                         AccessTokenResponse firebaseUser = response.body();
 
                         String uid = firebaseUser.getUid();
@@ -72,13 +77,13 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                     } else {
-                        // Handle error
+                        tvError.setText("Unable to log in. Please check your email and password and try again.");
                     }
                 }
 
                 @Override
                 public void onFailure(Call<AccessTokenResponse> call, Throwable t) {
-                    // Handle failure
+                    tvError.setText("Unable to log in. Please check your email and password and try again.");
                 }
             });
         });

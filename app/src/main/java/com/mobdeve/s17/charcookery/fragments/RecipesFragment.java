@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class RecipesFragment extends Fragment {
     private ImageButton addRecipeBtn, filterRecipesBtn;
 
     AppCompatButton btnApplyFilters;
+    private APIInterface apiInterface;
 
 
     public RecipesFragment() {}
@@ -53,6 +55,10 @@ public class RecipesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Create APIInterface instance
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+
         view = inflater.inflate(R.layout.fragment_recipes, container, false);
 
         // Update menu bar
@@ -61,25 +67,12 @@ public class RecipesFragment extends Fragment {
         setupView();
 
         etSearch = view.findViewById(R.id.etSearch);
-//        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-//                        (event != null && event.getAction() == KeyEvent.ACTION_DOWN &&
-//                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-//                    performSearch(etSearch.getText().toString());
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
 
         btnApplyFilters = view.findViewById(R.id.btnApplyFilters);
         btnApplyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 performSearch(etSearch.getText().toString());
-                updateRecipesBasedOnSearch(etSearch.getText().toString());
             }
         });
 
@@ -112,8 +105,7 @@ public class RecipesFragment extends Fragment {
         if (!query.isEmpty()) {
             // Prepare filter
             Map<String, Object> queryMap = new HashMap<>();
-            queryMap.put("category", query);
-
+            queryMap.put("q", query);
             fetchRecipesFromApi(query, queryMap);
         } else {
             // If query is empty, display all recipes
@@ -125,9 +117,6 @@ public class RecipesFragment extends Fragment {
         // Get user id
         SharedPreferences prefs = getContext().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
         String userId = prefs.getString(Constants.SP_USER_ID, null);
-
-        // Create an instance of APIInterface
-        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
         // For now, let's log the query and fetch mock data
         System.out.println("Search Query: " + query);
@@ -144,14 +133,14 @@ public class RecipesFragment extends Fragment {
                     updateRecipesBasedOnSearch(searchedRecipes);
                 } else {
                     // Handle unsuccessful response
-
+                    Log.e("RecipesFragment", "API request failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<List<RecipeItem>> call, Throwable t) {
                 // Handle failure
-
+                Log.e("RecipesFragment", "API request failed: " + t.getMessage());
             }
         });
     }
@@ -161,11 +150,29 @@ public class RecipesFragment extends Fragment {
         ((CollectionRecipesAdapter) rvAdapter).updateData(searchedRecipes);
     }
 
-    private void updateRecipesBasedOnSearch(String query) {
-        ArrayList<RecipeItem> filteredRecipes = filterRecipes(query);
-        ((CollectionRecipesAdapter) rvAdapter).updateData(filteredRecipes);
-    }
-    private ArrayList<RecipeItem> filterRecipes(String query) {
-        return Mocker.generateRecipeItems(3, 10);
-    }
+//    private void updateRecipesBasedOnSearch(String query) {
+//        ArrayList<RecipeItem> filteredRecipes = filterRecipes(query);
+//        ((CollectionRecipesAdapter) rvAdapter).updateData(filteredRecipes);
+//    }
+//    private ArrayList<RecipeItem> filterRecipes(String query) {
+//        ArrayList<RecipeItem> filteredRecipes = new ArrayList<>();
+//
+//        if (query == null || query.trim().isEmpty()) {
+//            // If the query is empty or null, return all recipes
+//            return Mocker.generateRecipeItems(3, 5); // Adjust parameters as needed
+//        }
+//
+//        // Replace this line with your actual data source or method to get recipes
+//        List<RecipeItem> allRecipes =
+//
+//        for (RecipeItem recipe : allRecipes) {
+//            // Check if the recipe name or category contains the query (case-insensitive)
+//            if ((recipe.getTitle() != null && recipe.getTitle().toLowerCase().contains(query.toLowerCase())) ||
+//                    (recipe.getCategory() != null && recipe.getCategory().toLowerCase().contains(query.toLowerCase()))) {
+//                filteredRecipes.add(recipe);
+//            }
+//        }
+//        return filteredRecipes;
+//    }
+
 }

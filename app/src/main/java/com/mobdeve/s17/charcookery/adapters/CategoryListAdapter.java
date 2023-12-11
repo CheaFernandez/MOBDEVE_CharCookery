@@ -66,6 +66,12 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         }
     }
 
+    public void removeCategory(int position) {
+        categories.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
+    }
+
     public CategoryListAdapter(ArrayList<Category> categories) {
         this.categories = categories;
     }

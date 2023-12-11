@@ -91,6 +91,20 @@ public class RecipeItem implements Serializable {
         this.userId = userId;
     }
 
+    public RecipeItem(String category, String name, String notes, int durationMinutes,
+                      String coverImage, String[] instructions, String[] ingredients, boolean isFavorite, String userId) {
+        // For created user recipes (no id yet)
+        this.category = category;
+        this.name = name;
+        this.notes = notes;
+        this.durationMinutes = durationMinutes;
+        this.coverImage = coverImage;
+        this.instructions = instructions;
+        this.ingredients = ingredients;
+        this.isFavorite = isFavorite;
+        this.userId = userId;
+    }
+
     public Bitmap getImageResource() {
         if (coverImage == null) {
             // Use placeholder

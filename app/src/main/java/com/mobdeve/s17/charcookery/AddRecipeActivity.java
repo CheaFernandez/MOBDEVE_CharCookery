@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,6 +20,15 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.mobdeve.s17.charcookery.api.APIClient;
+import com.mobdeve.s17.charcookery.api.APIInterface;
+import com.mobdeve.s17.charcookery.models.RecipeItem;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
@@ -34,6 +45,11 @@ public class AddRecipeActivity extends AppCompatActivity {
     AppCompatButton recipe_addrecipe_btn;
     AppCompatButton recipe_cancel_btn;
     Spinner categorySpinner;
+
+    View view;
+
+    String imageURL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,8 +128,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         recipe_addrecipe_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Add Recipe to Database
-                gotoPreviousPage(v);
+                uploadRecipe(v);
             }
         });
         recipe_cancel_btn = findViewById(R.id.cancel_btn);
@@ -147,5 +162,55 @@ public class AddRecipeActivity extends AppCompatActivity {
     public void gotoPreviousPage(View v) {
         super.onBackPressed();
         finish();
+    }
+
+    private void uploadImage() {
+
+    }
+
+    private void uploadRecipe(View view) {
+        String category = categorySpinner.getSelectedItem().toString();;
+        String name = edit_recipe_name_field.getText().toString();
+        String notes = edit_notes_field.getText().toString();
+
+        String durationText = edit_estimated_time_field.getText().toString();
+        int durationMinutes;
+        try {
+            durationMinutes = Integer.parseInt(durationText);
+        } catch (NumberFormatException e) {
+            durationMinutes = 0; // Default value
+        }
+
+        String coverImage = "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png";
+        String[] instructions = edit_instructions_field.getText().toString().split("\\n");;
+        String[] ingredients = edit_ingredients_field.getText().toString().split("\\n");;
+        boolean isFavorite = false;
+
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        String userId = prefs.getString(Constants.SP_USER_ID, null);
+
+        RecipeItem recipeItem = new RecipeItem(category, name, notes, durationMinutes, coverImage, instructions, ingredients, isFavorite, userId);
+
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<RecipeItem> call = apiInterface.createRecipe(recipeItem);
+
+        call.enqueue(new Callback<RecipeItem>() {
+            @Override
+            public void onResponse(Call<RecipeItem> call, Response<RecipeItem> response) {
+                if (response.isSuccessful()) {
+                    // Go back to recipes page
+                    gotoPreviousPage(view);
+                    Toast.makeText(AddRecipeActivity.this, "Added recipe", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(AddRecipeActivity.this, "Unable to create recipe", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecipeItem> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(AddRecipeActivity.this, "Unable to create recipe", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

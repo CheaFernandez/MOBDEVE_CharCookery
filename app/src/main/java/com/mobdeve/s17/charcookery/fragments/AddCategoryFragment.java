@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ public class AddCategoryFragment extends Fragment {
     private View view;
     private EditText titleField;
     private Button cancelBtn, addCategoryBtn;
+    private TextView tvError;
 
     public AddCategoryFragment() {}
 
@@ -32,7 +34,7 @@ public class AddCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.activity_add_category, container, false);
+        view = inflater.inflate(R.layout.fragment_add_category, container, false);
 
         // Update menu bar
         ((MainActivity) getActivity()).updateMenuBar();
@@ -46,6 +48,8 @@ public class AddCategoryFragment extends Fragment {
         titleField = view.findViewById(R.id.edit_title_field);
         addCategoryBtn = view.findViewById(R.id.add_category_btn);
         cancelBtn = view.findViewById(R.id.cancel_btn);
+        tvError = view.findViewById(R.id.tvError);
+
 
         cancelBtn.setOnClickListener(v -> {
             titleField.setText("");
@@ -71,19 +75,20 @@ public class AddCategoryFragment extends Fragment {
             @Override
             public void onResponse(Call<Category> call, Response<Category> response) {
                 if (response.isSuccessful()) {
+                    tvError.setText("");
                     Toast.makeText(getContext(), "Successfully created category", Toast.LENGTH_SHORT).show();
 
                     titleField.setText("");
                     ((MainActivity) getActivity()).switchToMainView();
                 } else {
-                    Toast.makeText(getContext(), "Failed to create category", Toast.LENGTH_SHORT).show();
+                    tvError.setText("Failed to create category. Check if category \"" + title + "\" already exists.");
                 }
             }
 
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getContext(), "Failed to create category", Toast.LENGTH_SHORT).show();
+                tvError.setText("Failed to create category");
             }
         });
     }

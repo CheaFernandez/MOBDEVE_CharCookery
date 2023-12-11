@@ -3,6 +3,7 @@ package com.mobdeve.s17.charcookery.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,12 +17,36 @@ import java.util.ArrayList;
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder> {
     private ArrayList<Category> categories;
 
+    // Interface to handle click events
+    public interface OnItemClickListener {
+        void onDeleteClick(int position);
+    }
+
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public static class CategoryListViewHolder extends RecyclerView.ViewHolder {
         public TextView tvTitle;
-        public CategoryListViewHolder(View v) {
+        public Button categoryDeleteButton;
+
+        public CategoryListViewHolder(View v, final OnItemClickListener listener) {
             super(v);
 
             tvTitle = v.findViewById(R.id.categoryTitle);
+            categoryDeleteButton = v.findViewById(R.id.categoryDeleteBtn);
+
+            // Set up the click listener for categoryDeleteButton
+            categoryDeleteButton.setOnClickListener(v1 -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onDeleteClick(position);
+                    }
+                }
+            });
         }
     }
 
@@ -33,7 +58,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     @Override
     public CategoryListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_category, parent, false);
-        return new CategoryListViewHolder(v);
+        return new CategoryListViewHolder(v, listener);
     }
 
     @Override

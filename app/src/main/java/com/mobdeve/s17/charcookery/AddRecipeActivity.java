@@ -77,6 +77,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
 
+        // TODO: Update category spinner
         categorySpinner = findViewById(R.id.spinner_category_field);
 
         String[] items = {"Breakfast", "Lunch", "Dinner", "Snack", "Dessert"};

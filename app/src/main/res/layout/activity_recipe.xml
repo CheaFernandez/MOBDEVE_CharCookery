@@ -49,6 +49,21 @@
         android:paddingEnd="16dp"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
+        <Button
+            android:id="@+id/recipeDeleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:backgroundTint="@color/white"
+            android:foreground="@drawable/delete"
+            android:foregroundGravity="center|fill"
+            android:minWidth="0dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+
+
     </LinearLayout>
 
     <ImageView

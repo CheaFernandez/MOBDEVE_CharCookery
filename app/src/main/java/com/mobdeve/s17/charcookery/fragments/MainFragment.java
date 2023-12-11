@@ -139,9 +139,43 @@ public class MainFragment extends Fragment {
         Call<List<Category>> call = apiInterface.getCategoriesForUser(userId);
 
         APICaller.enqueue(call, categories -> {
+
             RecyclerView.Adapter<CategoryListAdapter.CategoryListViewHolder> rvAdapter = new CategoryListAdapter(
                     new ArrayList<>(categories));
             rvCategories.setAdapter(rvAdapter);
+
+            // Create and set up the adapter with the fetched categories
+            CategoryListAdapter adapter = new CategoryListAdapter(new ArrayList<>(categories));
+            rvCategories.setAdapter(adapter);
+
+            // Set up the click listener for deleteCategory
+            adapter.setOnItemClickListener(position -> {
+                deleteCategory(position);
+            });
+        });
+    }
+
+    private void deleteCategory(int position) {
+        // Get user id
+        SharedPreferences prefs = context.getSharedPreferences(Constants.APP_NAME, Context.MODE_PRIVATE);
+        String userId = prefs.getString(Constants.SP_USER_ID, null);
+
+        // Fetch categories from API
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<List<Category>> call = apiInterface.getCategoriesForUser(userId);
+
+        APICaller.enqueue(call, categories -> {
+            // Get the category to delete
+            Category categoryToDelete = categories.get(position);
+
+            // Delete the category from the API
+            Call<Void> deleteCall = apiInterface.deleteCategoryById(categoryToDelete.getId());
+
+            // Handle potential errors during the delete operation
+            APICaller.enqueue(deleteCall, response -> {
+                // On successful delete, update the category list
+                inflateCategoryList();
+            });
         });
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,8 +35,9 @@ import retrofit2.Response;
 
 public class RecipeActivity extends BaseRecipeActivity {
 
-    public ImageButton cookingModeButton;
-    public RecipeItem recipe;
+    private ImageButton cookingModeButton;
+    private RecipeItem recipe;
+    private Button recipeDeleteBtn;
     private boolean isCookingModeFragmentAdded = false;
 
 
@@ -52,7 +54,53 @@ public class RecipeActivity extends BaseRecipeActivity {
         fetchRecipeFromIntent();
         inflatePageWithRecipe();
         setupTabs();
+        setupDelete();
     }
+
+    private void setupDelete(){
+        recipeDeleteBtn = findViewById(R.id.recipeDeleteBtn);
+        recipeDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeActivity.this);
+                builder.setTitle("Delete Recipe");
+                builder.setMessage("Are you sure you want to delete this recipe?");
+
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Handle the OK button click, if needed
+                        deleteRecipe();
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton(android.R.string.cancel, null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+    }
+
+    private void deleteRecipe(){
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<Void> call = apiInterface.deleteRecipeById(recipe.getId());
+
+        APICaller.enqueue(call, new APICaller.APICallback<Void>() {
+            @Override
+            public void onSuccess(Void result) {
+                Toast.makeText(RecipeActivity.this, "Recipe deleted", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Toast.makeText(RecipeActivity.this, "Failed to delete recipe", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
 
     private void fetchRecipeFromIntent() {
         Intent intent = getIntent();

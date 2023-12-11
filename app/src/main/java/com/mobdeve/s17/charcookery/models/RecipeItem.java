@@ -14,7 +14,6 @@ import java.net.URL;
 
 public class RecipeItem implements Serializable {
     private int imageResource;
-    private boolean isFavorite;
 
     @SerializedName("id")
     private String id;
@@ -24,6 +23,9 @@ public class RecipeItem implements Serializable {
 
     @SerializedName("name")
     private String name;
+
+    @SerializedName("is_favorite")
+    private boolean isFavorite;
 
     @SerializedName("notes")
     private String notes;

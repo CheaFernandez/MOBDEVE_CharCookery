@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -16,11 +17,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s17.charcookery.R;
 import com.mobdeve.s17.charcookery.RecipeActivity;
+import com.mobdeve.s17.charcookery.api.APIClient;
+import com.mobdeve.s17.charcookery.api.APIInterface;
+import com.mobdeve.s17.charcookery.api.models.UpdateRecipeFavoriteBody;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAdapter.RecipePreviewHolder> {
     private ImageView recipePreviewImg;
@@ -81,26 +89,44 @@ public class RecipesPreviewAdapter extends RecyclerView.Adapter<RecipesPreviewAd
         recipePreviewImg.setOnClickListener(recipePreviewListener);
         recipePreviewTitle.setOnClickListener(recipePreviewListener);
 
-
         Drawable dwHeartFilled = ContextCompat.getDrawable(context, R.drawable.heart_filled);
         Drawable dwHeartOutline = ContextCompat.getDrawable(context, R.drawable.heart_outline);
 
-        if (currentItem.checkFavorite()) {
-            holder.btnFavorite.setForeground(dwHeartFilled);
-        } else {
-            holder.btnFavorite.setForeground(dwHeartOutline);
-        }
+        holder.btnFavorite.setForeground(currentItem.checkFavorite() ? dwHeartFilled : dwHeartOutline);
 
         holder.btnFavorite.setOnClickListener(v -> {
+            // Update frontend
             currentItem.toggleFavorite();
+            holder.btnFavorite.setForeground(currentItem.checkFavorite() ? dwHeartFilled : dwHeartOutline);
 
-            if (currentItem.checkFavorite()) {
-                holder.btnFavorite.setForeground(dwHeartFilled);
-            } else {
-                holder.btnFavorite.setForeground(dwHeartOutline);
-            }
+            APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+            UpdateRecipeFavoriteBody updateBody = new UpdateRecipeFavoriteBody(currentItem.checkFavorite());
+            Call<RecipeItem> call = apiInterface.updateRecipeFavoriteStatus(currentItem.getId(), updateBody);
+
+            call.enqueue(new Callback<RecipeItem>() {
+                @Override
+                public void onResponse(Call<RecipeItem> call, Response<RecipeItem> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(v.getContext(), "Updated recipe favorite status", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Reset favorite status
+                        currentItem.toggleFavorite();
+                        holder.btnFavorite.setForeground(currentItem.checkFavorite() ? dwHeartFilled : dwHeartOutline);
+                        Toast.makeText(v.getContext(), "Unable to update recipe favorite status", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RecipeItem> call, Throwable t) {
+                    // Reset favorite status
+                    currentItem.toggleFavorite();
+                    holder.btnFavorite.setForeground(currentItem.checkFavorite() ? dwHeartFilled : dwHeartOutline);
+                    Toast.makeText(v.getContext(), "Unable to update recipe favorite status", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
         });
-        return;
     }
 
     public void setRecipes(List<RecipeItem> newRecipes) {

@@ -21,6 +21,7 @@ import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
 import com.mobdeve.s17.charcookery.api.models.UpdateRecipeNotesBody;
 import com.mobdeve.s17.charcookery.components.BaseRecipeActivity;
+import com.mobdeve.s17.charcookery.fragments.CookingModeTimerFragment;
 import com.mobdeve.s17.charcookery.models.RecipeItem;
 import com.squareup.picasso.Picasso;
 
@@ -33,8 +34,9 @@ import retrofit2.Response;
 
 public class RecipeActivity extends BaseRecipeActivity {
 
-    ImageButton cookingModeButton;
-    RecipeItem recipe;
+    public ImageButton cookingModeButton;
+    public RecipeItem recipe;
+    private boolean isCookingModeFragmentAdded = false;
 
 
     @Override
@@ -84,12 +86,24 @@ public class RecipeActivity extends BaseRecipeActivity {
         recipeTabLayout.setupWithViewPager(viewPager);
 
         cookingModeButton = findViewById(R.id.cookingModeButton);
-        cookingModeButton.setOnClickListener(v -> { goToCookingModeActivity(); });
+        cookingModeButton.setOnClickListener(v -> { goToCookingModeFragment(); });
     }
 
-    private void goToCookingModeActivity() {
-        Intent intent = new Intent(RecipeActivity.this, CookingModeActivity.class);
-        startActivity(intent);
+    private void goToCookingModeFragment() {
+        if (!isCookingModeFragmentAdded) {
+            CookingModeTimerFragment cookingModeTimerFragment = new CookingModeTimerFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, cookingModeTimerFragment)
+                    .addToBackStack(null)
+                    .commit();
+            isCookingModeFragmentAdded = true;
+            cookingModeButton.setImageResource(R.drawable.stop_cm_btn_txt);
+        } else {
+            // If the fragment is already added, remove it
+            getSupportFragmentManager().popBackStack();
+            isCookingModeFragmentAdded = false;
+            cookingModeButton.setImageResource(R.drawable.start_cm_btn_txt);
+        }
     }
     public void showEditNotesDialog(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

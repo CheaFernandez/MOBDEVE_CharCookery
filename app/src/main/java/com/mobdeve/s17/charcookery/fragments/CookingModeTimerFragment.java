@@ -1,44 +1,52 @@
-package com.mobdeve.s17.charcookery;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.mobdeve.s17.charcookery.fragments;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.fragment.app.Fragment;
+
+import com.mobdeve.s17.charcookery.R;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class CookingModeActivity extends AppCompatActivity {
+public class CookingModeTimerFragment extends Fragment {
 
-    TextView timerTxtView;
-    ImageButton startTimerBtn;
-    ImageButton pauseTimerBtn;
-    ImageButton restartTimerBtn;
-    Button setTimerBtn;
+    private TextView timerTxtView;
+    private ImageButton startTimerBtn;
+    private ImageButton pauseTimerBtn;
+    private ImageButton restartTimerBtn;
+    private Button setTimerBtn;
 
-    CountDownTimer countDownTimer;
-    long timeLeftInMillis = 00;
-    boolean timerRunning = false;
+    private CountDownTimer countDownTimer;
+    private long timeLeftInMillis = 00;
+    private boolean timerRunning = false;
 
-    int hour, minute;
+    private int hour, minute;
+
+    public CookingModeTimerFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cooking_mode);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_cookingmode, container, false);
 
-        timerTxtView = findViewById(R.id.timerTxtView);
-        startTimerBtn = findViewById(R.id.startTimerBtn);
-        pauseTimerBtn = findViewById(R.id.pauseTimerBtn);
-        restartTimerBtn = findViewById(R.id.restartTimerBtn);
-        setTimerBtn = findViewById(R.id.setTimerBtn);
+        timerTxtView = view.findViewById(R.id.timerTxtView);
+        startTimerBtn = view.findViewById(R.id.startTimerBtn);
+        pauseTimerBtn = view.findViewById(R.id.pauseTimerBtn);
+        restartTimerBtn = view.findViewById(R.id.restartTimerBtn);
+        setTimerBtn = view.findViewById(R.id.setTimerBtn);
 
         updateTimer();
 
@@ -69,6 +77,8 @@ public class CookingModeActivity extends AppCompatActivity {
                 restartTimer();
             }
         });
+
+        return view;
     }
 
     private void startTimer() {
@@ -116,7 +126,7 @@ public class CookingModeActivity extends AppCompatActivity {
         // Convert hour and minute to milliseconds
         timeLeftInMillis = (hour * 60L + minute) * 60L * 1000L;
 
-        // Set the time to the TextView in CookingModeActivity
+        // Set the time to the TextView in CookingModeFragment
         NumberFormat f = new DecimalFormat("00");
         timerTxtView.setText(f.format(hour) + ":" + f.format(minute) + ":00");
     }
@@ -131,16 +141,9 @@ public class CookingModeActivity extends AppCompatActivity {
             }
         };
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, /*style,*/ onTimeSetListener, hour, minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), onTimeSetListener, hour, minute, true);
 
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
     }
-
-    public void gotoPreviousPage(View v) {
-        super.onBackPressed();
-        finish();
-    }
 }
-
-// Time Picker code was referenced from this youtube video: https://www.youtube.com/watch?v=c6c1giRekB4

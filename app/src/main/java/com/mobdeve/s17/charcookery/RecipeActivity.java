@@ -2,6 +2,7 @@ package com.mobdeve.s17.charcookery;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
@@ -20,6 +22,7 @@ import com.mobdeve.s17.charcookery.adapters.RecipePagerAdapter;
 import com.mobdeve.s17.charcookery.api.APICaller;
 import com.mobdeve.s17.charcookery.api.APIClient;
 import com.mobdeve.s17.charcookery.api.APIInterface;
+import com.mobdeve.s17.charcookery.api.models.UpdateRecipeFavoriteBody;
 import com.mobdeve.s17.charcookery.api.models.UpdateRecipeNotesBody;
 import com.mobdeve.s17.charcookery.components.BaseRecipeActivity;
 import com.mobdeve.s17.charcookery.fragments.CookingModeTimerFragment;
@@ -120,6 +123,44 @@ public class RecipeActivity extends BaseRecipeActivity {
         TextView tvDuration = findViewById(R.id.recipeDuration);
         String durationString = getString(R.string.duration_format, recipe.getDurationMinutes());
         tvDuration.setText(durationString);
+
+        Drawable dwHeartFilled = ContextCompat.getDrawable(getApplicationContext(), R.drawable.heart_filled);
+        Drawable dwHeartOutline = ContextCompat.getDrawable(getApplicationContext(), R.drawable.heart_outline);
+
+        Button btnFavorite = findViewById(R.id.recipeLikeBtn);
+        btnFavorite.setForeground(recipe.checkFavorite() ? dwHeartFilled : dwHeartOutline);
+
+        btnFavorite.setOnClickListener(v -> {
+            // Update frontend
+            recipe.toggleFavorite();
+            btnFavorite.setForeground(recipe.checkFavorite() ? dwHeartFilled : dwHeartOutline);
+
+            APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+            UpdateRecipeFavoriteBody updateBody = new UpdateRecipeFavoriteBody(recipe.checkFavorite());
+            Call<RecipeItem> call = apiInterface.updateRecipeFavoriteStatus(recipe.getId(), updateBody);
+
+            call.enqueue(new Callback<RecipeItem>() {
+                @Override
+                public void onResponse(Call<RecipeItem> call, Response<RecipeItem> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Updated recipe favorite status", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Reset favorite status
+                        recipe.toggleFavorite();
+                        btnFavorite.setForeground(recipe.checkFavorite() ? dwHeartFilled : dwHeartOutline);
+                        Toast.makeText(getApplicationContext(), "Unable to update recipe favorite status", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RecipeItem> call, Throwable t) {
+                    // Reset favorite status
+                    recipe.toggleFavorite();
+                    btnFavorite.setForeground(recipe.checkFavorite() ? dwHeartFilled : dwHeartOutline);
+                    Toast.makeText(getApplicationContext(), "Unable to update recipe favorite status", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
     }
 
     private void setupTabs() {
